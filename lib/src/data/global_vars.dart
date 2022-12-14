@@ -1,6 +1,6 @@
-import 'package:asd/presentation/screens/chai_home.dart';
-import 'package:asd/presentation/screens/home_tab.dart';
 import 'package:flutter/material.dart';
+
+import '../presentation/feature/screens/home_tab.dart';
 
 final List<String> imagesUrl = [
   "https://images.unsplash.com/photo-1669962367460-00b711b2e3f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",

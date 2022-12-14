@@ -1,7 +1,8 @@
-import 'package:asd/data/colors.dart';
-import 'package:asd/data/global_vars.dart';
-import 'package:asd/presentation/widgets/drawer_offers.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../data/colors.dart';
+import '../../../../../data/global_vars.dart';
+import '../widgets/drawer_offers.dart';
 
 class MyListView extends StatelessWidget {
   const MyListView({Key? key}) : super(key: key);

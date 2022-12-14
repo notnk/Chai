@@ -1,5 +1,6 @@
-import 'package:asd/data/global_vars.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../data/global_vars.dart';
 
 Column listHotels(int index) {
   return Column(

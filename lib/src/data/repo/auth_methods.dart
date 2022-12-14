@@ -43,6 +43,20 @@ class AuthMethods {
     return res;
   }
 
+  // Future<Cubes> getUserDetails() async {
+  //   User currentUser = _auth.currentUser!;
+
+  //   DocumentSnapshot documentSnapshot = await _firebaseFirestore
+  //       .collection('users')
+  //       .doc('hotel')
+  //       .collection('ifthar')
+  //       .doc('values')
+  //       .collection('coin')
+  //       .get();
+
+  //   return Cubes.fromSnap(documentSnapshot);
+  // }
+
   //google Sign in
   // signInWithGoogle() async {
   //   final GoogleSignInAccount? googleUser =

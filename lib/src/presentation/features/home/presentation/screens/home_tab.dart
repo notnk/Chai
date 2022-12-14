@@ -1,4 +1,5 @@
-import 'package:asd/presentation/screens/resturants.dart';
+import 'package:asd/presentation/feature/screens/redeem.dart';
+
 import 'package:flutter/material.dart';
 
 class HomeTab extends StatefulWidget {
@@ -42,7 +43,7 @@ class _HomeTabState extends State<HomeTab> {
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const Resturants(),
+                          builder: (context) => const RedeemTab(),
                         ),
                       ),
                       child: Container(

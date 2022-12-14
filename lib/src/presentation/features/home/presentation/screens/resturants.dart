@@ -1,5 +1,6 @@
-import 'package:asd/presentation/widgets/hotelListv2.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/hotelListv2.dart';
 
 class Resturants extends StatelessWidget {
   const Resturants({Key? key}) : super(key: key);

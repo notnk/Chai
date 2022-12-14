@@ -1,5 +1,4 @@
-import 'package:asd/data/global_vars.dart';
-import 'package:asd/presentation/widgets/hotelListv2.dart';
+import 'package:asd/src/presentation/features/home/presentation/widgets/hotelListv2.dart';
 import 'package:flutter/material.dart';
 import '../widgets/topListView.dart';
 

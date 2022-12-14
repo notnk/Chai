@@ -1,8 +1,10 @@
-import 'package:asd/data/auth_methods.dart';
-import 'package:asd/data/colors.dart';
-import 'package:asd/presentation/screens/dashboard.dart';
-import 'package:asd/presentation/widgets/text_field_input.dart';
+import 'package:asd/src/data/colors.dart';
+import 'package:asd/src/data/repo/auth_methods.dart';
+import 'package:asd/src/presentation/features/login/text_field_input.dart';
+
 import 'package:flutter/material.dart';
+
+import '../home/presentation/screens/dashboard.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);

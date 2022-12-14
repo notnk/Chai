@@ -1,8 +1,9 @@
 import 'dart:ui';
 
-import 'package:asd/data/colors.dart';
-import 'package:asd/data/global_vars.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../data/colors.dart';
+import '../../../../../data/global_vars.dart';
 
 class RegisterHotels extends StatelessWidget {
   const RegisterHotels({Key? key}) : super(key: key);

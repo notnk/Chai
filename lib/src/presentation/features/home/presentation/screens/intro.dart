@@ -1,6 +1,7 @@
-import 'package:asd/presentation/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+
+import '../../../../../../presentation/feature/screens/login.dart';
 
 class IntroPage extends StatelessWidget {
   const IntroPage({Key? key}) : super(key: key);
