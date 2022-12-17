@@ -1,9 +1,11 @@
+import 'package:asd/src/presentation/features/redeem/screens/use_coin.dart';
 import 'package:flutter/material.dart';
 
 import 'get_coin.dart';
 
 class RedeemTab extends StatefulWidget {
-  const RedeemTab({Key? key}) : super(key: key);
+  final String hotelName;
+  const RedeemTab({Key? key, required this.hotelName}) : super(key: key);
 
   @override
   State<RedeemTab> createState() => _RedeemTabState();
@@ -17,8 +19,8 @@ class _RedeemTabState extends State<RedeemTab> {
       child: Scaffold(
         body: TabBarView(
           children: [
-            getCoin(),
-            const Text("data"),
+            GetCoin(hotelName: widget.hotelName),
+            UseCoin(hotelName: widget.hotelName),
           ],
         ),
         appBar: AppBar(
@@ -27,11 +29,11 @@ class _RedeemTabState extends State<RedeemTab> {
             tabs: [
               Tab(
                 icon: Icon(Icons.generating_tokens_outlined),
-                text: 'Use Coins',
+                text: 'Get Coins',
               ),
               Tab(
                 icon: Icon(Icons.token_sharp),
-                text: 'Get Coins',
+                text: 'Use Coins',
               ),
             ],
           ),
@@ -40,5 +42,3 @@ class _RedeemTabState extends State<RedeemTab> {
     );
   }
 }
-
-class GetCoin {}

@@ -1,4 +1,4 @@
-import 'package:asd/src/data/colors.dart';
+import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/data/repo/auth_methods.dart';
 import 'package:asd/src/presentation/features/login/text_field_input.dart';
 

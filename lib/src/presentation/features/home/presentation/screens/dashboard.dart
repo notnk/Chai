@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../../data/colors.dart';
-import '../../../../../data/global_vars.dart';
+import '../../../../../misc/colors.dart';
+import '../../../../../misc/global_vars.dart';
 import '../widgets/drawer_dashboard.dart';
 
 class Dashboard extends StatefulWidget {

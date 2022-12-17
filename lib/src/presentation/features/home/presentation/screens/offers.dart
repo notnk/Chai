@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../data/colors.dart';
-import '../../../../../data/global_vars.dart';
+import '../../../../../misc/colors.dart';
+import '../../../../../misc/global_vars.dart';
 import '../widgets/drawer_offers.dart';
 
 class MyListView extends StatelessWidget {

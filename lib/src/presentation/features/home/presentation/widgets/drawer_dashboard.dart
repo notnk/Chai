@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../screens/hotels.dart';
-import '../screens/innerPage.dart';
 
 ListView drawerForDashboard(BuildContext context) {
   final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final int coins;
   return ListView(
     children: [
@@ -26,14 +25,6 @@ ListView drawerForDashboard(BuildContext context) {
         ),
       ),
       ListTile(
-        onTap: () {},
-        leading: const Icon(Icons.email_outlined),
-        title: Text(
-          '${auth.currentUser!.email}', //will be later updated to user display name
-          style: const TextStyle(color: Colors.white),
-        ),
-      ),
-      ListTile(
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const RegisterHotels(),
@@ -42,18 +33,6 @@ ListView drawerForDashboard(BuildContext context) {
         leading: const Icon(Icons.hotel_class_outlined),
         title: const Text(
           'All Hotels',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      ListTile(
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const SamplePage(),
-          ),
-        ),
-        leading: const Icon(Icons.hotel_class_outlined),
-        title: const Text(
-          'floationg',
           style: TextStyle(color: Colors.white),
         ),
       ),

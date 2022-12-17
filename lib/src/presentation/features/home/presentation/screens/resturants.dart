@@ -1,12 +1,13 @@
+import 'package:asd/src/misc/global_vars.dart';
+import 'package:asd/src/presentation/features/home/presentation/screens/enitity_page.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/hotelListv2.dart';
 
 class Resturants extends StatelessWidget {
   const Resturants({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // final count = AuthMethods().getEnitiyListNo('hotels');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -25,35 +26,34 @@ class Resturants extends StatelessWidget {
               title: Text("Sorted Based on"),
               trailing: Icon(Icons.sort_outlined),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                itemCount: hotelsName.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height / 10,
+                    child: ListTile(
+                      leading: Image.network(
+                        imagesUrl[index],
+                        width: 100,
+                        fit: BoxFit.fill,
+                      ),
+                      title: Text(hotelsName[index]),
+                      trailing: IconButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => EntityPage(
+                              hotelName: hotelsName[index],
+                            ),
+                          ),
+                        ),
+                        icon: const Icon(Icons.next_plan_outlined),
+                      ),
+                    ),
+                  );
+                },
               ),
-            ),
-            listHotels(0),
-            const SizedBox(
-              height: 30,
-            ),
-            listHotels(1),
-            const SizedBox(
-              height: 30,
-            ),
-            listHotels(2),
-            const SizedBox(
-              height: 30,
-            ),
-            listHotels(3),
-            const SizedBox(
-              height: 30,
-            ),
-            listHotels(3),
-            const SizedBox(
-              height: 30,
-            ),
-            listHotels(3),
-            const SizedBox(
-              height: 30,
             ),
           ],
         ),

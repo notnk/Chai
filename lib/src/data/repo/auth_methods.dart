@@ -1,6 +1,8 @@
+import 'dart:developer';
+import 'package:asd/src/presentation/features/redeem/screens/succ.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/material.dart';
 
 //test@gmail.com qwe123
 class AuthMethods {
@@ -23,66 +25,53 @@ class AuthMethods {
     return res;
   }
 
-  Future<String> registerUser({
+  Future checkCode({
     required String hotelName,
+    required int amount,
+    required int codeGet,
+    required BuildContext context,
   }) async {
-    String res = "couldnt register";
     try {
-      await _firebaseFirestore
-          .collection(hotelName)
-          .doc(_auth.currentUser!.uid)
-          .set(
-        {
-          'cubes': 0 as int,
-        },
-      );
-      res = "succ";
+      final data =
+          await _firebaseFirestore.collection("hotels").doc(hotelName).get();
+      final code = await data.get('code');
+      final int codeInt = int.parse(code);
+      final dataCoin = await _firebaseFirestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid + hotelName)
+          .get();
+      var totalCoin = await dataCoin.get('coin');
+      if (codeGet == codeInt) {
+        totalCoin = (amount ~/ 10) + totalCoin;
+        await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .update(
+          {
+            'coin': totalCoin,
+          },
+        );
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => const AlertDialog(
+            content: Text('Code was correct and coins are added!'),
+          ),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SuccPage(),
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => const AlertDialog(
+            content: Text('Code was Wrong!'),
+          ),
+        );
+      }
     } catch (e) {
-      res = e.toString();
+      log('this is the error ${e.toString()}');
     }
-    return res;
-  }
-
-  // Future<Cubes> getUserDetails() async {
-  //   User currentUser = _auth.currentUser!;
-
-  //   DocumentSnapshot documentSnapshot = await _firebaseFirestore
-  //       .collection('users')
-  //       .doc('hotel')
-  //       .collection('ifthar')
-  //       .doc('values')
-  //       .collection('coin')
-  //       .get();
-
-  //   return Cubes.fromSnap(documentSnapshot);
-  // }
-
-  //google Sign in
-  // signInWithGoogle() async {
-  //   final GoogleSignInAccount? googleUser =
-  //       await GoogleSignIn(scopes: <String>['email']).signIn();
-  //   final GoogleSignInAuthentication googleAuth =
-  //       await googleUser!.authentication;
-  //   final credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-  //   return await FirebaseAuth.instance.signInWithCredential(credential);
-  // }
-  signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser =
-        await GoogleSignIn(scopes: <String>["email"]).signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
