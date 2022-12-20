@@ -71,7 +71,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                 height: 20,
               ),
               GestureDetector(
-                onTap: () => loginUserOnTap(),
+                // onTap: () => loginUserOnTap(),
+                onTap: () => AuthMethods().signInWithGoogle(context),
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,

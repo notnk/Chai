@@ -1,37 +1,14 @@
-import 'package:asd/src/presentation/features/redeem/screens/submit.dart';
 import 'package:flutter/material.dart';
 
-class GetCoin extends StatefulWidget {
-  final String hotelName;
-  const GetCoin({Key? key, required this.hotelName}) : super(key: key);
+class SelectOffer extends StatefulWidget {
+  const SelectOffer({Key? key}) : super(key: key);
 
   @override
-  State<GetCoin> createState() => _GetCoinState();
+  State<SelectOffer> createState() => _SelectOfferState();
 }
 
-class _GetCoinState extends State<GetCoin> {
+class _SelectOfferState extends State<SelectOffer> {
   final TextEditingController _textEditingController = TextEditingController();
-  checkAmount() {
-    final amount = _textEditingController.text;
-    final int amountInt = int.parse(amount);
-    if (amountInt > 100) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => SubmitButton(
-            amount: amountInt,
-            hotelName: widget.hotelName,
-          ),
-        ),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => const AlertDialog(
-          content: Text('Enter money man(>100)!'),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +16,10 @@ class _GetCoinState extends State<GetCoin> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Ask the member to enter the code"),
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -48,9 +29,9 @@ class _GetCoinState extends State<GetCoin> {
               flex: 1,
               child: Container(),
             ),
-            Text(
-              "Enter you amount below of ${widget.hotelName}",
-              style: const TextStyle(
+            const Text(
+              "Enter the code below for offer ",
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -61,10 +42,10 @@ class _GetCoinState extends State<GetCoin> {
             TextField(
               controller: _textEditingController,
               decoration: InputDecoration(
+                hintText: 'Code',
                 focusedBorder: inputBorder,
                 enabledBorder: inputBorder,
-                hintText: 'Amount',
-                labelText: 'Enter amount',
+                labelText: 'Enter code',
                 fillColor: Colors.grey,
                 filled: true,
                 border: InputBorder.none,
@@ -75,7 +56,7 @@ class _GetCoinState extends State<GetCoin> {
               height: 60,
             ),
             InkWell(
-              onTap: () => checkAmount(),
+              onTap: () => {},
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 30,
@@ -96,11 +77,5 @@ class _GetCoinState extends State<GetCoin> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _textEditingController.dispose();
   }
 }

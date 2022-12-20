@@ -3,6 +3,9 @@ import 'package:asd/src/presentation/features/redeem/screens/succ.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../presentation/features/home/presentation/screens/dashboard.dart';
 
 //test@gmail.com qwe123
 class AuthMethods {
@@ -25,28 +28,57 @@ class AuthMethods {
     return res;
   }
 
-  Future checkCode({
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      if (userCredential.user != null) {
+        if (userCredential.additionalUserInfo!.isNewUser) {}
+      }
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => const Dashboard(),
+        ),
+        (route) => false,
+      );
+    } catch (e) {
+      log(
+        e.toString(),
+      );
+    }
+  }
+
+  Future<void> checkCode({
     required String hotelName,
     required int amount,
     required int codeGet,
     required BuildContext context,
   }) async {
     try {
+      // log(_auth.currentUser!.uid + hotelName);
       final data =
           await _firebaseFirestore.collection("hotels").doc(hotelName).get();
       final code = await data.get('code');
-      final int codeInt = int.parse(code);
+      var codeInt = int.parse(code);
       final dataCoin = await _firebaseFirestore
           .collection('users')
           .doc(_auth.currentUser!.uid + hotelName)
           .get();
-      var totalCoin = await dataCoin.get('coin');
+      int totalCoin = await dataCoin.get('coin');
       if (codeGet == codeInt) {
         totalCoin = (amount ~/ 10) + totalCoin;
         await _firebaseFirestore
             .collection('users')
             .doc(_auth.currentUser!.uid + hotelName)
-            .update(
+            .set(
           {
             'coin': totalCoin,
           },

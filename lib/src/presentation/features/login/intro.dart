@@ -20,6 +20,7 @@ class IntroPage extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => const LoginWidget(),
             ),
+            
           ),
           pages: [
             PageViewModel(
