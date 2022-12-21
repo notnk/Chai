@@ -1,25 +1,27 @@
 import 'package:asd/src/data/repo/auth_methods.dart';
+import 'package:asd/src/misc/colors.dart';
 import 'package:flutter/material.dart';
 
-class SubmitButton extends StatefulWidget {
-  final int amount;
+class SubmitUseCoin extends StatefulWidget {
+  final int offerCoin;
   final String hotelName;
 
-  const SubmitButton({Key? key, required this.amount, required this.hotelName})
+  const SubmitUseCoin(
+      {Key? key, required this.offerCoin, required this.hotelName})
       : super(key: key);
 
   @override
-  State<SubmitButton> createState() => _SubmitButtonState();
+  State<SubmitUseCoin> createState() => _SubmitUseCoinState();
 }
 
-class _SubmitButtonState extends State<SubmitButton> {
+class _SubmitUseCoinState extends State<SubmitUseCoin> {
   final TextEditingController _textEditingController = TextEditingController();
   checkCode() {
     final code = _textEditingController.text;
     final int codeInt = int.parse(code);
     if (codeInt > 1000) {
-      AuthMethods().checkCode(
-        amount: widget.amount,
+      AuthMethods().checkCodeToMinusCoin(
+        offerCoin: widget.offerCoin,
         codeGet: codeInt,
         context: context,
         hotelName: widget.hotelName,
@@ -40,7 +42,9 @@ class _SubmitButtonState extends State<SubmitButton> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
+      backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
+        backgroundColor: mobileBackgroundColor,
         title: const Text("Ask the member to enter the code"),
         elevation: 0,
       ),

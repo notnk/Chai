@@ -11,24 +11,26 @@ import '../../presentation/features/home/presentation/screens/dashboard.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  Future<String> loginUser({
-    required String email,
-    required String password,
+
+  Future<int> getBalance({
+    required String hotelName,
   }) async {
-    String res = "some error";
     try {
-      if (email.isNotEmpty || password.isNotEmpty) {
-        await _auth.signInWithEmailAndPassword(
-            email: email, password: password);
-        res = "succ";
-      }
+      final data = await _firebaseFirestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid + hotelName)
+          .get();
+      final int balance = int.parse(data.get('coins'));
+      return balance;
     } catch (e) {
-      res = e.toString();
+      log(
+        e.toString(),
+      );
     }
-    return res;
+    return 0;
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
+  Future<String> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
@@ -49,58 +51,188 @@ class AuthMethods {
         ),
         (route) => false,
       );
+      return 'succ';
     } catch (e) {
       log(
         e.toString(),
       );
     }
+    return 'error';
   }
 
-  Future<void> checkCode({
+  Future<void> checkCodeToAddCoin({
     required String hotelName,
     required int amount,
     required int codeGet,
     required BuildContext context,
   }) async {
     try {
-      // log(_auth.currentUser!.uid + hotelName);
       final data =
           await _firebaseFirestore.collection("hotels").doc(hotelName).get();
       final code = await data.get('code');
       var codeInt = int.parse(code);
-      final dataCoin = await _firebaseFirestore
-          .collection('users')
-          .doc(_auth.currentUser!.uid + hotelName)
-          .get();
-      int totalCoin = await dataCoin.get('coin');
-      if (codeGet == codeInt) {
-        totalCoin = (amount ~/ 10) + totalCoin;
+      try {
+        //if its not a new user
+        final dataCoin = await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .get();
+        int totalCoin = await dataCoin.get('coin');
+        if (codeGet == codeInt) {
+          totalCoin = (amount ~/ 10) + totalCoin;
+          await _firebaseFirestore
+              .collection('users')
+              .doc(_auth.currentUser!.uid + hotelName)
+              .set(
+            {
+              'coin': totalCoin,
+            },
+          );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => SuccPage(
+                hotelName: hotelName,
+              ),
+            ),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => const AlertDialog(
+              content: Text('Code was Wrong!'),
+            ),
+          );
+        }
+      } catch (e) {
+        //if new user
         await _firebaseFirestore
             .collection('users')
             .doc(_auth.currentUser!.uid + hotelName)
             .set(
           {
-            'coin': totalCoin,
+            'coin': 0,
           },
         );
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => const AlertDialog(
-            content: Text('Code was correct and coins are added!'),
-          ),
+        final dataCoin = await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .get();
+        int totalCoin = await dataCoin.get('coin');
+        if (codeGet == codeInt) {
+          totalCoin = (amount ~/ 10) + totalCoin;
+          await _firebaseFirestore
+              .collection('users')
+              .doc(_auth.currentUser!.uid + hotelName)
+              .set(
+            {
+              'coin': totalCoin,
+            },
+          );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => SuccPage(
+                hotelName: hotelName,
+              ),
+            ),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => const AlertDialog(
+              content: Text('Code was Wrong!'),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      log('this is the error ${e.toString()}');
+    }
+  }
+
+  Future<void> checkCodeToMinusCoin({
+    required String hotelName,
+    required int offerCoin,
+    required int codeGet,
+    required BuildContext context,
+  }) async {
+    try {
+      final data =
+          await _firebaseFirestore.collection("hotels").doc(hotelName).get();
+      final code = await data.get('code');
+      var codeInt = int.parse(code);
+      try {
+        //if its not a new user
+        final dataCoin = await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .get();
+        int totalCoin = await dataCoin.get('coin');
+        if (codeGet == codeInt) {
+          int newCoin = totalCoin - offerCoin;
+          await _firebaseFirestore
+              .collection('users')
+              .doc(_auth.currentUser!.uid + hotelName)
+              .set(
+            {
+              'coin': newCoin,
+            },
+          );
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => SuccPage(
+                hotelName: hotelName,
+              ),
+            ),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => const AlertDialog(
+              content: Text('Code was Wrong!'),
+            ),
+          );
+        }
+      } catch (e) {
+        //if new user
+        await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .set(
+          {
+            'coin': 0,
+          },
         );
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const SuccPage(),
-          ),
-        );
-      } else {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => const AlertDialog(
-            content: Text('Code was Wrong!'),
-          ),
-        );
+        final dataCoin = await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .get();
+        int totalCoin = await dataCoin.get('coin');
+        if (codeGet == codeInt) {
+          if (totalCoin >= offerCoin) {
+            await _firebaseFirestore
+                .collection('users')
+                .doc(_auth.currentUser!.uid + hotelName)
+                .set(
+              {
+                'coin': totalCoin - offerCoin,
+              },
+            );
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => SuccPage(
+                  hotelName: hotelName,
+                ),
+              ),
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => const AlertDialog(
+                content: Text('Code was Wrong!'),
+              ),
+            );
+          }
+        }
       }
     } catch (e) {
       log('this is the error ${e.toString()}');

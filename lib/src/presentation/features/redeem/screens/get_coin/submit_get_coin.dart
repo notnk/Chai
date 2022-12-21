@@ -1,14 +1,38 @@
+import 'package:asd/src/data/repo/auth_methods.dart';
 import 'package:flutter/material.dart';
 
-class SelectOffer extends StatefulWidget {
-  const SelectOffer({Key? key}) : super(key: key);
+class SubmitGetCoin extends StatefulWidget {
+  final int amount;
+  final String hotelName;
+
+  const SubmitGetCoin({Key? key, required this.amount, required this.hotelName})
+      : super(key: key);
 
   @override
-  State<SelectOffer> createState() => _SelectOfferState();
+  State<SubmitGetCoin> createState() => _SubmitGetCoinState();
 }
 
-class _SelectOfferState extends State<SelectOffer> {
+class _SubmitGetCoinState extends State<SubmitGetCoin> {
   final TextEditingController _textEditingController = TextEditingController();
+  checkCode() {
+    final code = _textEditingController.text;
+    final int codeInt = int.parse(code);
+    if (codeInt > 1000 && codeInt < 1001) {
+      AuthMethods().checkCodeToAddCoin(
+        amount: widget.amount,
+        codeGet: codeInt,
+        context: context,
+        hotelName: widget.hotelName,
+      ); //checking for correct code and adding coin if correct code is entred
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => const AlertDialog(
+          content: Text('Code was Wrong!'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +53,9 @@ class _SelectOfferState extends State<SelectOffer> {
               flex: 1,
               child: Container(),
             ),
-            const Text(
-              "Enter the code below for offer ",
-              style: TextStyle(
+            Text(
+              "Enter you code below for hotel ${widget.hotelName}",
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -56,7 +80,7 @@ class _SelectOfferState extends State<SelectOffer> {
               height: 60,
             ),
             InkWell(
-              onTap: () => {},
+              onTap: () => checkCode(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 30,

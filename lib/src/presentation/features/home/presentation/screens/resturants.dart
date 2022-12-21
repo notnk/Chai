@@ -1,5 +1,8 @@
+import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/misc/global_vars.dart';
+import 'package:asd/src/presentation/features/home/presentation/screens/chess.dart';
 import 'package:asd/src/presentation/features/home/presentation/screens/enitity_page.dart';
+import 'package:asd/src/presentation/features/redeem/screens/succ.dart';
 import 'package:flutter/material.dart';
 
 class Resturants extends StatelessWidget {
@@ -8,8 +11,29 @@ class Resturants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final count = AuthMethods().getEnitiyListNo('hotels');
+    nextPage(int index) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => EntityPage(
+            hotelName: hotelsName[index],
+            heroTagIndex: index,
+          ),
+        ),
+      );
+    }
+
+    chessPage() {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const ChessPage(),
+        ),
+      );
+    }
+
     return Scaffold(
+      backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
+        backgroundColor: mobileBackgroundColor,
         title: const Text(
           "Resturants",
           style: TextStyle(
@@ -34,21 +58,38 @@ class Resturants extends StatelessWidget {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height / 10,
                     child: ListTile(
-                      leading: Image.network(
-                        imagesUrl[index],
-                        width: 100,
-                        fit: BoxFit.fill,
+                      leading: InkWell(
+                        onTap: () => nextPage(index),
+                        child: Hero(
+                          tag: 'test-hero$index',
+                          child: Image.network(
+                            imagesUrl[index],
+                            width: 100,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
-                      title: Text(hotelsName[index]),
-                      trailing: IconButton(
-                        onPressed: () => Navigator.of(context).push(
+                      title: Text(
+                        hotelsName[index],
+                      ),
+                      trailing: InkWell(
+                        onLongPress: () => chessPage(),
+                        // onTap: () => Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => EntityPage(
+                        //       hotelName: hotelsName[index],
+                        //       heroTagIndex: index,
+                        //     ),
+                        //   ),
+                        // ),
+                        onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => EntityPage(
+                            builder: (context) => SuccPage(
                               hotelName: hotelsName[index],
                             ),
                           ),
                         ),
-                        icon: const Icon(Icons.next_plan_outlined),
+                        child: const Icon(Icons.next_plan_outlined),
                       ),
                     ),
                   );

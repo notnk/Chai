@@ -1,3 +1,4 @@
+import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/presentation/features/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -8,9 +9,11 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mobileBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(3),
         child: IntroductionScreen(
+          globalBackgroundColor: mobileBackgroundColor,
           next: const Icon(Icons.navigate_next_outlined),
           showSkipButton: true,
           skip: const Text("skip"),
@@ -20,13 +23,13 @@ class IntroPage extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => const LoginWidget(),
             ),
-            
           ),
           pages: [
             PageViewModel(
               title: '1',
               body: 'USP',
               decoration: const PageDecoration(
+                // pageColor: mobileBackgroundColor,
                 bodyAlignment: Alignment.center,
               ),
             ),

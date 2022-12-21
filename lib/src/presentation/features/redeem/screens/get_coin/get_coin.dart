@@ -1,4 +1,5 @@
-import 'package:asd/src/presentation/features/redeem/screens/submit.dart';
+import 'package:asd/src/misc/colors.dart';
+import 'package:asd/src/presentation/features/redeem/screens/get_coin/submit_get_coin.dart';
 import 'package:flutter/material.dart';
 
 class GetCoin extends StatefulWidget {
@@ -17,7 +18,7 @@ class _GetCoinState extends State<GetCoin> {
     if (amountInt > 100) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => SubmitButton(
+          builder: (context) => SubmitGetCoin(
             amount: amountInt,
             hotelName: widget.hotelName,
           ),
@@ -39,6 +40,7 @@ class _GetCoinState extends State<GetCoin> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
+      backgroundColor: mobileBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

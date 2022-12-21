@@ -1,23 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../screens/hotels.dart';
 
 ListView drawerForDashboard(BuildContext context) {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignInAccount? currentUser;
+
+  final GoogleSignInAccount? user = currentUser;
+
   return ListView(
     children: [
-      const DrawerHeader(
-        margin: EdgeInsets.all(4),
+      DrawerHeader(
+        margin: const EdgeInsets.all(4),
         child: CircleAvatar(
-          backgroundImage: NetworkImage(
-              "https://images.unsplash.com/photo-1618042164219-62c820f10723?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dW5zcGFsc2h8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"),
+          child: Text(
+            '${auth.currentUser!.displayName}',
+          ),
         ),
       ),
       ListTile(
         onTap: () {},
         leading: const Icon(Icons.email_outlined),
         title: Text(
-          '${auth.currentUser!.email}', //will be later updated to user display name
+          '${auth.currentUser!.email}',
           style: const TextStyle(color: Colors.white),
         ),
       ),

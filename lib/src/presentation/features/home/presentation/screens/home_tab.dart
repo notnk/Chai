@@ -13,21 +13,18 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Text(
-              "Random Quotes(could be based on time),making this sentense long for testing all the lengths. ",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 0.5,
-              ),
-            ),
-          ),
-        ),
+        // SizedBox(
+        //   width: MediaQuery.of(context).size.width,
+        //   child: const Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //     child: QuotesWidget(
+        //       width: 300,
+        //       height: 200,
+        //       quoteFontSize: 21,
+        //       authorFontSize: 18,
+        //     ),
+        //   ),
+        // ),
         Expanded(
           child: CustomScrollView(
             primary: true,
@@ -37,7 +34,7 @@ class _HomeTabState extends State<HomeTab> {
                 sliver: SliverGrid.count(
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  crossAxisCount: 2,
+                  crossAxisCount: 1,
                   children: <Widget>[
                     GestureDetector(
                       onTap: () => Navigator.of(context).push(
@@ -58,7 +55,6 @@ class _HomeTabState extends State<HomeTab> {
                               color: Colors.black,
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
-                              // letterSpacing: 0.5,
                             ),
                           ),
                         ),
@@ -67,71 +63,116 @@ class _HomeTabState extends State<HomeTab> {
                     GestureDetector(
                       onTap: () {},
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.green[200],
+                        ),
                         padding: const EdgeInsets.all(8),
-                        color: Colors.green[200],
-                        child: const Text(
-                          'Hairdressing',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            // letterSpacing: 0.5,
+                        child: const Center(
+                          child: Text(
+                            'Hairdressing',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Resturants(),
+                        ),
+                      ),
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.green[300],
+                        ),
                         padding: const EdgeInsets.all(8),
-                        color: Colors.green[300],
-                        child: const Text(
-                          '?',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            // letterSpacing: 0.5,
+                        child: const Center(
+                          child: Text(
+                            "Nothing",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.green[400],
-                      child: const Text(
-                        '?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          // letterSpacing: 0.5,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Resturants(),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.green[400],
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        child: const Center(
+                          child: Text(
+                            "Nothing",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.green[500],
-                      child: const Text(
-                        '?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          // letterSpacing: 0.5,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Resturants(),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.green[500],
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        child: const Center(
+                          child: Text(
+                            "Nothing",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.green[600],
-                      child: const Text(
-                        '?',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          // letterSpacing: 0.5,
+                    GestureDetector(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Resturants(),
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.green[600],
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        child: const Center(
+                          child: Text(
+                            "Nothing",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
                     ),

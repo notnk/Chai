@@ -31,14 +31,10 @@ class _DashboardState extends State<Dashboard> {
       backgroundColor: mobileBackgroundColor,
       resizeToAvoidBottomInset: false,
       drawer: Drawer(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: mobileBackgroundColor,
         child: drawerForDashboard(context),
       ),
       appBar: AppBar(
-        // leading: InkWell(
-        //   onTap: () {},
-        //   child: const Icon(Icons.search_outlined),
-        // ),
         actions: [
           GestureDetector(
             onTap: () {},
@@ -49,12 +45,6 @@ class _DashboardState extends State<Dashboard> {
           const SizedBox(
             width: 20,
           ),
-          // InkWell(
-          //   onTap: () {},
-          //   child: const Icon(
-          //     Icons.notification_important_outlined,
-          //   ),
-          // ),
           const SizedBox(
             width: 10,
           )
