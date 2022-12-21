@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../../misc/global_vars.dart';
 
 Column listHotels(int index) {
-  // final name = AuthMethods().getHotelName(index);
   return Column(
     children: [
       const SizedBox(

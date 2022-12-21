@@ -10,7 +10,6 @@ class Resturants extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final count = AuthMethods().getEnitiyListNo('hotels');
     nextPage(int index) {
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -74,14 +73,6 @@ class Resturants extends StatelessWidget {
                       ),
                       trailing: InkWell(
                         onLongPress: () => chessPage(),
-                        // onTap: () => Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => EntityPage(
-                        //       hotelName: hotelsName[index],
-                        //       heroTagIndex: index,
-                        //     ),
-                        //   ),
-                        // ),
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => SuccPage(

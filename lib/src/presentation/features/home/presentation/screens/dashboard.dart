@@ -1,8 +1,9 @@
+import 'package:asd/src/presentation/features/home/presentation/screens/hotels.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../../misc/colors.dart';
 import '../../../../../misc/global_vars.dart';
-import '../widgets/drawer_dashboard.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -27,12 +28,52 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       backgroundColor: mobileBackgroundColor,
       resizeToAvoidBottomInset: false,
       drawer: Drawer(
         backgroundColor: mobileBackgroundColor,
-        child: drawerForDashboard(context),
+        child: ListView(
+          children: [
+            DrawerHeader(
+              margin: const EdgeInsets.all(4),
+              child: CircleAvatar(
+                child: Text(
+                  '${auth.currentUser!.displayName}',
+                ),
+              ),
+            ),
+            ListTile(
+              onTap: () {},
+              leading: const Icon(Icons.email_outlined),
+              title: Text(
+                '${auth.currentUser!.email}',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const RegisterHotels(),
+                ),
+              ),
+              leading: const Icon(Icons.hotel_class_outlined),
+              title: const Text(
+                'All Hotels',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              onTap: () => auth.signOut(),
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(
         actions: [
