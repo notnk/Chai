@@ -1,9 +1,9 @@
-import 'package:asd/src/presentation/features/home/presentation/screens/hotels.dart';
+import 'package:asd/src/presentation/home/screens/hotels.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../../misc/colors.dart';
-import '../../../../../misc/global_vars.dart';
+import '../../../misc/colors.dart';
+import '../../../misc/global_vars.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);

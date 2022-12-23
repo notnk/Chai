@@ -1,6 +1,6 @@
 import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/misc/global_vars.dart';
-import 'package:asd/src/presentation/features/redeem/screens/use_coin/submit_use_coin.dart';
+import 'package:asd/src/presentation/redeem/use_coin/submit_use_coin.dart';
 import 'package:flutter/material.dart';
 
 class SelectOffer extends StatefulWidget {

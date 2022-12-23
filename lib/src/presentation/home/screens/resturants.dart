@@ -1,8 +1,7 @@
 import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/misc/global_vars.dart';
-import 'package:asd/src/presentation/features/home/presentation/screens/chess.dart';
-import 'package:asd/src/presentation/features/home/presentation/screens/enitity_page.dart';
-import 'package:asd/src/presentation/features/redeem/screens/succ.dart';
+import 'package:asd/src/presentation/home/screens/chess.dart';
+import 'package:asd/src/presentation/enitty/enitity_page.dart';
 import 'package:flutter/material.dart';
 
 class Resturants extends StatelessWidget {
@@ -46,7 +45,7 @@ class Resturants extends StatelessWidget {
         child: Column(
           children: [
             const ListTile(
-              title: Text("Sorted Based on"),
+              title: Text("[Sorted Based on]"),
               trailing: Icon(Icons.sort_outlined),
             ),
             SizedBox(
@@ -54,33 +53,34 @@ class Resturants extends StatelessWidget {
               child: ListView.builder(
                 itemCount: hotelsName.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height / 10,
-                    child: ListTile(
-                      leading: InkWell(
-                        onTap: () => nextPage(index),
-                        child: Hero(
-                          tag: 'test-hero$index',
-                          child: Image.network(
-                            imagesUrl[index],
+                  return InkWell(
+                    onTap: () => nextPage(index),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height / 10,
+                      child: ListTile(
+                        leading: Hero(
+                          tag: 'hero$index',
+                          child: Container(
                             width: 100,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        hotelsName[index],
-                      ),
-                      trailing: InkWell(
-                        onLongPress: () => chessPage(),
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => SuccPage(
-                              hotelName: hotelsName[index],
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                  imagesUrl[index],
+                                ),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
                         ),
-                        child: const Icon(Icons.next_plan_outlined),
+                        title: Text(
+                          hotelsName[index],
+                        ),
+                        trailing: InkWell(
+                          onLongPress: () => chessPage(),
+                          onTap: () => nextPage(index),
+                          child: const Icon(Icons.next_plan_outlined),
+                        ),
                       ),
                     ),
                   );

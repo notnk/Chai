@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../misc/colors.dart';
-import '../../../../../misc/global_vars.dart';
+import '../../../misc/colors.dart';
+import '../../../misc/global_vars.dart';
 
 class RegisterHotels extends StatelessWidget {
   const RegisterHotels({Key? key}) : super(key: key);

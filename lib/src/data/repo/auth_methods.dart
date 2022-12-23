@@ -1,13 +1,8 @@
 import 'dart:developer';
-import 'package:asd/src/presentation/features/redeem/screens/succ.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../presentation/features/home/presentation/screens/dashboard.dart';
-
-//test@gmail.com qwe123
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -30,7 +25,7 @@ class AuthMethods {
     return 0;
   }
 
-  Future<String> signInWithGoogle(BuildContext context) async {
+  Future<String> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
@@ -45,12 +40,6 @@ class AuthMethods {
       if (userCredential.user != null) {
         if (userCredential.additionalUserInfo!.isNewUser) {}
       }
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const Dashboard(),
-        ),
-        (route) => false,
-      );
       return 'succ';
     } catch (e) {
       log(
@@ -60,11 +49,10 @@ class AuthMethods {
     return 'error';
   }
 
-  Future<void> checkCodeToAddCoin({
+  Future<String> checkCodeToAddCoin({
     required String hotelName,
     required int amount,
     required int codeGet,
-    required BuildContext context,
   }) async {
     try {
       final data =
@@ -88,20 +76,7 @@ class AuthMethods {
               'coin': totalCoin,
             },
           );
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => SuccPage(
-                hotelName: hotelName,
-              ),
-            ),
-          );
-        } else {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => const AlertDialog(
-              content: Text('Code was Wrong!'),
-            ),
-          );
+          return 'succ';
         }
       } catch (e) {
         //if new user
@@ -128,32 +103,20 @@ class AuthMethods {
               'coin': totalCoin,
             },
           );
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => SuccPage(
-                hotelName: hotelName,
-              ),
-            ),
-          );
-        } else {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => const AlertDialog(
-              content: Text('Code was Wrong!'),
-            ),
-          );
+          return 'succ';
         }
       }
+      return 'succ';
     } catch (e) {
       log('this is the error ${e.toString()}');
     }
+    return 'error';
   }
 
-  Future<void> checkCodeToMinusCoin({
+  Future<String> checkCodeToMinusCoin({
     required String hotelName,
     required int offerCoin,
     required int codeGet,
-    required BuildContext context,
   }) async {
     try {
       final data =
@@ -177,20 +140,7 @@ class AuthMethods {
               'coin': newCoin,
             },
           );
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => SuccPage(
-                hotelName: hotelName,
-              ),
-            ),
-          );
-        } else {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => const AlertDialog(
-              content: Text('Code was Wrong!'),
-            ),
-          );
+          return 'succ';
         }
       } catch (e) {
         //if new user
@@ -217,25 +167,13 @@ class AuthMethods {
                 'coin': totalCoin - offerCoin,
               },
             );
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => SuccPage(
-                  hotelName: hotelName,
-                ),
-              ),
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => const AlertDialog(
-                content: Text('Code was Wrong!'),
-              ),
-            );
+            return 'succ';
           }
         }
       }
     } catch (e) {
       log('this is the error ${e.toString()}');
     }
+    return 'error';
   }
 }

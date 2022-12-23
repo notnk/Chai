@@ -1,36 +1,43 @@
 import 'package:asd/src/data/repo/auth_methods.dart';
-import 'package:asd/src/misc/colors.dart';
+import 'package:asd/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
 
-class SubmitUseCoin extends StatefulWidget {
-  final int offerCoin;
+class SubmitGetCoin extends StatefulWidget {
+  final int amount;
   final String hotelName;
 
-  const SubmitUseCoin(
-      {Key? key, required this.offerCoin, required this.hotelName})
+  const SubmitGetCoin({Key? key, required this.amount, required this.hotelName})
       : super(key: key);
 
   @override
-  State<SubmitUseCoin> createState() => _SubmitUseCoinState();
+  State<SubmitGetCoin> createState() => _SubmitGetCoinState();
 }
 
-class _SubmitUseCoinState extends State<SubmitUseCoin> {
+class _SubmitGetCoinState extends State<SubmitGetCoin> {
   final TextEditingController _textEditingController = TextEditingController();
-  checkCode() {
+  checkCode() async {
     final code = _textEditingController.text;
     final int codeInt = int.parse(code);
-    if (codeInt > 1000) {
-      AuthMethods().checkCodeToMinusCoin(
-        offerCoin: widget.offerCoin,
+    if (codeInt > 1000 && codeInt > 1001) {
+      String res = await AuthMethods().checkCodeToAddCoin(
+        amount: widget.amount,
         codeGet: codeInt,
-        context: context,
         hotelName: widget.hotelName,
-      ); //checking for correct code and adding coin if correct code is entred
+      );
+      if (res == 'succ') {
+        if (mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => SuccPage(hotelName: widget.hotelName),
+            ),
+          );
+        }
+      }
     } else {
       showDialog(
         context: context,
         builder: (BuildContext context) => const AlertDialog(
-          content: Text('Code was Wrong!'),
+          content: Text('Code was Wrong in submit page!'),
         ),
       );
     }
@@ -42,9 +49,7 @@ class _SubmitUseCoinState extends State<SubmitUseCoin> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
-      backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
         title: const Text("Ask the member to enter the code"),
         elevation: 0,
       ),

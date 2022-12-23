@@ -1,6 +1,6 @@
 import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/misc/global_vars.dart';
-import 'package:asd/src/presentation/features/redeem/screens/redeem.dart';
+import 'package:asd/src/presentation/redeem/redeem.dart';
 import 'package:flutter/material.dart';
 
 class EntityPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class _EntityPageState extends State<EntityPage> {
             width: MediaQuery.of(context).size.width,
             height: 150,
             child: Hero(
-              tag: 'test-hero${widget.heroTagIndex}',
+              tag: 'hero${widget.heroTagIndex}',
               child: Image.network(
                 imagesUrl[widget.heroTagIndex],
                 width: MediaQuery.of(context).size.width,

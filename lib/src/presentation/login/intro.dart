@@ -1,10 +1,30 @@
+import 'package:asd/src/data/repo/auth_methods.dart';
 import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/features/login/login.dart';
+import 'package:asd/src/presentation/home/screens/home_tab.dart';
+import 'package:asd/src/presentation/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-class IntroPage extends StatelessWidget {
+class IntroPage extends StatefulWidget {
   const IntroPage({Key? key}) : super(key: key);
+
+  @override
+  State<IntroPage> createState() => _IntroPageState();
+}
+
+class _IntroPageState extends State<IntroPage> {
+  onTapLogin() async {
+    String res = await AuthMethods().signInWithGoogle();
+    if (res == 'succ') {
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const HomeTab(),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +36,10 @@ class IntroPage extends StatelessWidget {
           globalBackgroundColor: mobileBackgroundColor,
           next: const Icon(Icons.navigate_next_outlined),
           showSkipButton: true,
-          skip: const Text("skip"),
-          done: const Text("done"),
+          backSemantic: 'Back',
+          back: const Text('Back'),
+          skip: const Text("Skip"),
+          done: const Text("Done"),
           dotsFlex: 3,
           onDone: () => Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -29,22 +51,26 @@ class IntroPage extends StatelessWidget {
               title: '1',
               body: 'USP',
               decoration: const PageDecoration(
-                // pageColor: mobileBackgroundColor,
                 bodyAlignment: Alignment.center,
               ),
             ),
             PageViewModel(
-              title: '2',
-              body: 'offers',
+              title: 'Offers',
+              body: 'Offers',
               decoration: const PageDecoration(
                 bodyAlignment: Alignment.center,
               ),
             ),
             PageViewModel(
-              title: '3',
-              body: 'login',
               decoration: const PageDecoration(
                 bodyAlignment: Alignment.center,
+              ),
+              title: 'Login',
+              bodyWidget: Center(
+                child: TextButton(
+                  onPressed: () => onTapLogin(),
+                  child: const Text("Login"),
+                ),
               ),
             ),
           ],

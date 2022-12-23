@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:firebase_core/firebase_core.dart';
-import 'src/presentation/features/home/presentation/screens/dashboard.dart';
-import 'src/presentation/features/login/intro.dart';
+import 'src/presentation/home/screens/home_tab.dart';
+import 'src/presentation/login/intro.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +15,7 @@ void main() async {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return const Dashboard();
+            return const HomeTab();
           } else {
             return const IntroPage();
           }
