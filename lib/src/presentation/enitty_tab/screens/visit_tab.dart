@@ -1,18 +1,18 @@
 import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/redeem/coins/use_coin/select_offer.dart';
+import 'package:asd/src/presentation/redeem/visits/selectvisit/select_visit.dart';
 import 'package:flutter/material.dart';
 
-import 'coins/get_coin/get_coin.dart';
+import '../../redeem/visits/getvisit/get_visit.dart';
 
-class RedeemTab extends StatefulWidget {
+class VisitTab extends StatefulWidget {
   final String hotelName;
-  const RedeemTab({Key? key, required this.hotelName}) : super(key: key);
+  const VisitTab({Key? key, required this.hotelName}) : super(key: key);
 
   @override
-  State<RedeemTab> createState() => _RedeemTabState();
+  State<VisitTab> createState() => _VisitTabState();
 }
 
-class _RedeemTabState extends State<RedeemTab> {
+class _VisitTabState extends State<VisitTab> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -20,14 +20,14 @@ class _RedeemTabState extends State<RedeemTab> {
       child: Scaffold(
         body: TabBarView(
           children: [
-            GetCoin(hotelName: widget.hotelName),
-            SelectOffer(hotelName: widget.hotelName),
+            GetVisit(hotelName: widget.hotelName),
+            SelectVisit(hotelName: widget.hotelName),
           ],
         ),
         backgroundColor: mobileBackgroundColor,
         appBar: AppBar(
           backgroundColor: mobileBackgroundColor,
-          title: const Text("Redeem"),
+          title: const Text("Visit"),
           bottom: const TabBar(
             tabs: [
               Tab(

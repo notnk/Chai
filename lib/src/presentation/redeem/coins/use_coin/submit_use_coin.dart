@@ -1,7 +1,8 @@
-import 'package:asd/src/data/repo/auth_methods.dart';
+import 'package:asd/src/data/services/auth_methods.dart';
 import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class SubmitUseCoin extends StatefulWidget {
   final int offerCoin;
@@ -28,8 +29,8 @@ class _SubmitUseCoinState extends State<SubmitUseCoin> {
       );
       if (res == 'succ') {
         if (mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
+          Navigator.of(context).pushReplacement(
+            SwipeablePageRoute(
               builder: (context) => SuccPage(hotelName: widget.hotelName),
             ),
           );

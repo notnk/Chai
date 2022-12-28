@@ -1,43 +1,35 @@
-import 'package:asd/src/data/repo/auth_methods.dart';
-import 'package:asd/src/presentation/redeem/succ.dart';
+import 'package:asd/src/misc/colors.dart';
+import 'package:asd/src/presentation/redeem/coins/get_coin/submit_get_coin.dart';
 import 'package:flutter/material.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
-class SubmitGetCoin extends StatefulWidget {
-  final int amount;
+class GetCoin extends StatefulWidget {
   final String hotelName;
-
-  const SubmitGetCoin({Key? key, required this.amount, required this.hotelName})
-      : super(key: key);
+  const GetCoin({Key? key, required this.hotelName}) : super(key: key);
 
   @override
-  State<SubmitGetCoin> createState() => _SubmitGetCoinState();
+  State<GetCoin> createState() => _GetCoinState();
 }
 
-class _SubmitGetCoinState extends State<SubmitGetCoin> {
+class _GetCoinState extends State<GetCoin> {
   final TextEditingController _textEditingController = TextEditingController();
-  checkCode() async {
-    final code = _textEditingController.text;
-    final int codeInt = int.parse(code);
-    if (codeInt > 1000 && codeInt > 1001) {
-      String res = await AuthMethods().checkCodeToAddCoin(
-        amount: widget.amount,
-        codeGet: codeInt,
-        hotelName: widget.hotelName,
+  checkAmount() {
+    final amount = _textEditingController.text;
+    final int amountInt = int.parse(amount);
+    if (amountInt > 100) {
+      Navigator.of(context).pushReplacement(
+        SwipeablePageRoute(
+          builder: (context) => SubmitGetCoin(
+            amount: amountInt,
+            hotelName: widget.hotelName,
+          ),
+        ),
       );
-      if (res == 'succ') {
-        if (mounted) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => SuccPage(hotelName: widget.hotelName),
-            ),
-          );
-        }
-      }
     } else {
       showDialog(
         context: context,
         builder: (BuildContext context) => const AlertDialog(
-          content: Text('Code was Wrong in submit page!'),
+          content: Text('Enter money man(>100)!'),
         ),
       );
     }
@@ -49,10 +41,7 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Ask the member to enter the code"),
-        elevation: 0,
-      ),
+      backgroundColor: mobileBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -63,7 +52,7 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
               child: Container(),
             ),
             Text(
-              "Enter you code below for hotel ${widget.hotelName}",
+              "Enter you amount below of ${widget.hotelName}",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -75,10 +64,10 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
             TextField(
               controller: _textEditingController,
               decoration: InputDecoration(
-                hintText: 'Code',
                 focusedBorder: inputBorder,
                 enabledBorder: inputBorder,
-                labelText: 'Enter code',
+                hintText: 'Amount',
+                labelText: 'Enter amount',
                 fillColor: Colors.grey,
                 filled: true,
                 border: InputBorder.none,
@@ -89,7 +78,7 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
               height: 60,
             ),
             InkWell(
-              onTap: () => checkCode(),
+              onTap: () => checkAmount(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 30,
@@ -110,5 +99,11 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _textEditingController.dispose();
   }
 }

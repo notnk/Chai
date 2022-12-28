@@ -8,7 +8,7 @@ final List<String> imagesUrl = [
   "https://images.unsplash.com/photo-1670258880147-3e871d5d87f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
 ];
 final List<String> entitysUrl = [
-  "https://png.pngtree.com/png-clipart/20210309/original/pngtree-modern-cottage-houses-and-hotel-set-png-image_5897277.png",
+  "https://img.icons8.com/ios-filled/512/street-food.png",
   "https://png.pngtree.com/png-clipart/20221017/original/pngtree-scissors-vector-with-head-shape-png-image_8700153.png",
   "http://clipart-library.com/newimages/question-mark-clipart-2-4.jpg",
 ];

@@ -1,34 +1,44 @@
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/redeem/get_coin/submit_get_coin.dart';
+import 'package:asd/src/data/services/auth_methods.dart';
+import 'package:asd/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
-class GetCoin extends StatefulWidget {
+class SubmitGetCoin extends StatefulWidget {
+  final int amount;
   final String hotelName;
-  const GetCoin({Key? key, required this.hotelName}) : super(key: key);
+
+  const SubmitGetCoin({Key? key, required this.amount, required this.hotelName})
+      : super(key: key);
 
   @override
-  State<GetCoin> createState() => _GetCoinState();
+  State<SubmitGetCoin> createState() => _SubmitGetCoinState();
 }
 
-class _GetCoinState extends State<GetCoin> {
+class _SubmitGetCoinState extends State<SubmitGetCoin> {
   final TextEditingController _textEditingController = TextEditingController();
-  checkAmount() {
-    final amount = _textEditingController.text;
-    final int amountInt = int.parse(amount);
-    if (amountInt > 100) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => SubmitGetCoin(
-            amount: amountInt,
-            hotelName: widget.hotelName,
-          ),
-        ),
+  checkCode() async {
+    final code = _textEditingController.text;
+    final int codeInt = int.parse(code);
+    if (codeInt > 1000 && codeInt > 1001) {
+      String res = await AuthMethods().checkCodeToAddCoin(
+        amount: widget.amount,
+        codeGet: codeInt,
+        hotelName: widget.hotelName,
       );
+      if (res == 'succ') {
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            SwipeablePageRoute(
+              builder: (context) => SuccPage(hotelName: widget.hotelName),
+            ),
+          );
+        }
+      }
     } else {
       showDialog(
         context: context,
         builder: (BuildContext context) => const AlertDialog(
-          content: Text('Enter money man(>100)!'),
+          content: Text('Code was Wrong in submit page!'),
         ),
       );
     }
@@ -40,7 +50,10 @@ class _GetCoinState extends State<GetCoin> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
-      backgroundColor: mobileBackgroundColor,
+      appBar: AppBar(
+        title: const Text("Ask the member to enter the code"),
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -51,7 +64,7 @@ class _GetCoinState extends State<GetCoin> {
               child: Container(),
             ),
             Text(
-              "Enter you amount below of ${widget.hotelName}",
+              "Enter you code below for hotel ${widget.hotelName}",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -63,10 +76,10 @@ class _GetCoinState extends State<GetCoin> {
             TextField(
               controller: _textEditingController,
               decoration: InputDecoration(
+                hintText: 'Code',
                 focusedBorder: inputBorder,
                 enabledBorder: inputBorder,
-                hintText: 'Amount',
-                labelText: 'Enter amount',
+                labelText: 'Enter code',
                 fillColor: Colors.grey,
                 filled: true,
                 border: InputBorder.none,
@@ -77,7 +90,7 @@ class _GetCoinState extends State<GetCoin> {
               height: 60,
             ),
             InkWell(
-              onTap: () => checkAmount(),
+              onTap: () => checkCode(),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 height: 30,
@@ -98,11 +111,5 @@ class _GetCoinState extends State<GetCoin> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _textEditingController.dispose();
   }
 }

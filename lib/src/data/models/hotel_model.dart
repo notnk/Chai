@@ -9,7 +9,7 @@ class Hotel {
     this.location,
     this.code,
   );
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'hotelName': hotelName,
       'location': location,
@@ -24,6 +24,5 @@ class Hotel {
       map['code'],
     );
   }
-  String toJson() => json.encode(toMap());
   factory Hotel.fromJson(String source) => Hotel.fromMap(json.decode(source));
 }

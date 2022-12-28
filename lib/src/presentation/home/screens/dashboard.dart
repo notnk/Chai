@@ -1,4 +1,3 @@
-import 'package:asd/src/presentation/home/screens/hotels.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,18 +49,6 @@ class _DashboardState extends State<Dashboard> {
               title: Text(
                 '${auth.currentUser!.email}',
                 style: const TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const RegisterHotels(),
-                ),
-              ),
-              leading: const Icon(Icons.hotel_class_outlined),
-              title: const Text(
-                'All Hotels',
-                style: TextStyle(color: Colors.white),
               ),
             ),
             ListTile(

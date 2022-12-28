@@ -1,7 +1,6 @@
-import 'package:asd/src/data/repo/auth_methods.dart';
+import 'package:asd/src/data/services/auth_methods.dart';
 import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/presentation/home/screens/home_tab.dart';
-import 'package:asd/src/presentation/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -39,13 +38,9 @@ class _IntroPageState extends State<IntroPage> {
           backSemantic: 'Back',
           back: const Text('Back'),
           skip: const Text("Skip"),
-          done: const Text("Done"),
+          done: const Text("Login"),
           dotsFlex: 3,
-          onDone: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const LoginWidget(),
-            ),
-          ),
+          onDone: () => onTapLogin(),
           pages: [
             PageViewModel(
               title: '1',

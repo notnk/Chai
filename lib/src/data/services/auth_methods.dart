@@ -7,6 +7,48 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
+  Future<void> fetchHotelNames() async {
+    final data = _firebaseFirestore.collection('hotels').get();
+    print(data);
+  }
+
+  Future<void> updateRatings({
+    required final String hotelName,
+    required final double userRating,
+  }) async {
+    final data =
+        await _firebaseFirestore.collection('hotels').doc(hotelName).get();
+    print(data);
+    final oldRating = double.parse(
+      data.get('rating'),
+    );
+    final int totalUser = int.parse(
+      data.get('totalUser'),
+    );
+    final int rating =
+        ((oldRating * totalUser) + userRating) ~/ (totalUser + 1);
+    try {
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid + hotelName)
+          .set(
+        {
+          'rating': rating,
+        },
+      );
+      await _firebaseFirestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid + hotelName)
+          .set(
+        {
+          'totalUser': totalUser + 1,
+        },
+      );
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   Future<int> getBalance({
     required String hotelName,
   }) async {
@@ -15,7 +57,9 @@ class AuthMethods {
           .collection('users')
           .doc(_auth.currentUser!.uid + hotelName)
           .get();
-      final int balance = int.parse(data.get('coins'));
+      final int balance = int.parse(
+        data.get('coins'),
+      );
       return balance;
     } catch (e) {
       log(

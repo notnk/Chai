@@ -1,9 +1,9 @@
 import 'package:asd/src/misc/colors.dart';
 import 'package:asd/src/misc/global_vars.dart';
-import 'package:asd/src/presentation/home/screens/hotels.dart';
-import 'package:asd/src/presentation/home/screens/resturants.dart';
+import 'package:asd/src/presentation/enitty_tab/screens/resturant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -19,7 +19,18 @@ class _HomeTabState extends State<HomeTab> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Tab"),
+        actions: [
+          GestureDetector(
+            onTap: () => auth.signOut(),
+            child: const CircleAvatar(
+              backgroundImage: AssetImage("lib/src/assets/chai.jpg"),
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+        ],
+        title: const Text("Chai logo text"),
         centerTitle: true,
         backgroundColor: mobileBackgroundColor,
       ),
@@ -45,18 +56,6 @@ class _HomeTabState extends State<HomeTab> {
               ),
             ),
             ListTile(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const RegisterHotels(),
-                ),
-              ),
-              leading: const Icon(Icons.hotel_class_outlined),
-              title: const Text(
-                'All Hotels',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
               onTap: () => auth.signOut(),
               leading: const Icon(Icons.logout_outlined),
               title: const Text(
@@ -69,6 +68,71 @@ class _HomeTabState extends State<HomeTab> {
       ),
       body: Column(
         children: [
+          SizedBox(
+            // color: Colors.amber,
+            height: 100,
+            child: Row(
+              children: [
+                Container(
+                  color: Colors.red,
+                  width: 50,
+                  child: const Center(
+                    child: Text("Offer"),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  color: Colors.red,
+                  width: 50,
+                  child: const Center(
+                    child: Text("Offer"),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  color: Colors.red,
+                  width: 50,
+                  child: const Center(
+                    child: Text("Offer"),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  color: Colors.red,
+                  width: 50,
+                  child: const Center(
+                    child: Text("Offer"),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  color: Colors.red,
+                  width: 50,
+                  child: const Center(
+                    child: Text("Offer"),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  color: Colors.red,
+                  width: 20,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: CustomScrollView(
               primary: true,
@@ -82,93 +146,63 @@ class _HomeTabState extends State<HomeTab> {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Resturants(),
+                          SwipeablePageRoute(
+                            builder: (context) => const NewResturant(
+                              hotelName: 'Resturants',
+                            ),
                           ),
                         ),
                         child: Container(
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                entitysUrl[0],
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                "lib/src/assets/Restaurant.png",
+                              ),
+                              fit: BoxFit.fill,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                            // color: const Color.fromARGB(255, 232, 93, 50),
+                            color: blueColor,
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Resturants",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                "lib/src/assets/Barber.png",
                               ),
                               fit: BoxFit.fill,
                             ),
                             borderRadius: BorderRadius.circular(15),
-                            color: Colors.green[100],
+                            color: Colors.brown,
                           ),
-                          padding: const EdgeInsets.symmetric(horizontal: 36),
-                          child: const Text(
-                            "Resturants",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                entitysUrl[1],
+                          child: const Center(
+                            child: Text(
+                              'Hairdressing',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                              fit: BoxFit.fill,
-                            ),
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.green[200],
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                          child: const Text(
-                            'Hairdressing',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Resturants(),
-                          ),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            // shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                entitysUrl[2],
-                              ),
-                              fit: BoxFit.fill,
-                            ),
-                            // borderRadius: BorderRadius.circular(15),
-                            // color: Colors.green[300],
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          // child: const Center(
-                          //   child: Text(
-                          //     "Nothing",
-                          //     style: TextStyle(
-                          //       color: Colors.black,
-                          //       fontSize: 20,
-                          //       fontWeight: FontWeight.w500,
-                          //     ),
-                          //   ),
-                          // ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Resturants(),
-                          ),
-                        ),
+                        onTap: () => {},
                         child: Container(
                           decoration: BoxDecoration(
                             // shape: BoxShape.circle,
@@ -195,11 +229,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Resturants(),
-                          ),
-                        ),
+                        onTap: () => {},
                         child: Container(
                           decoration: BoxDecoration(
                             // shape: BoxShape.circle,
@@ -226,11 +256,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const Resturants(),
-                          ),
-                        ),
+                        onTap: () => {},
                         child: Container(
                           decoration: BoxDecoration(
                             // shape: BoxShape.circle,
