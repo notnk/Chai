@@ -1,4 +1,4 @@
-import 'package:asd/src/presentation/home/screens/home_tab.dart';
+import 'package:Chai/src/presentation/home/screens/new_home.dart';
 import 'package:flutter/material.dart';
 
 final List<String> imagesUrl = [
@@ -19,7 +19,7 @@ final List<String> hotelsName = [
   "Topform",
 ];
 const List<Widget> homeScreenItems = [
-  HomeTab(),
+  NewHomePage(),
   Center(
     child: Text(
       "page2",

@@ -1,6 +1,6 @@
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/misc/global_vars.dart';
-import 'package:asd/src/presentation/redeem/redeem.dart';
+import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/misc/global_vars.dart';
+import 'package:Chai/src/presentation/redeem/redeem.dart';
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 

@@ -1,6 +1,6 @@
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/misc/global_vars.dart';
-import 'package:asd/src/presentation/enitty_tab/widgets/home_items.dart';
+import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/misc/global_vars.dart';
+import 'package:Chai/src/presentation/enitty_tab/widgets/home_items.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

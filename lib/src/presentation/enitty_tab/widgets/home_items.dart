@@ -1,4 +1,4 @@
-import 'package:asd/src/presentation/enitty_tab/screens/new_enitity_page.dart';
+import 'package:Chai/src/presentation/enitty_tab/screens/new_enitity_page.dart';
 import 'package:flutter/material.dart';
 
 class NewHomeItems extends StatefulWidget {

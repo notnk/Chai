@@ -1,5 +1,5 @@
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/redeem/visits/selectvisit/select_visit.dart';
+import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/presentation/redeem/visits/selectvisit/select_visit.dart';
 import 'package:flutter/material.dart';
 
 import '../../redeem/visits/getvisit/get_visit.dart';
@@ -32,11 +32,11 @@ class _VisitTabState extends State<VisitTab> {
             tabs: [
               Tab(
                 icon: Icon(Icons.generating_tokens_outlined),
-                text: 'Get Coins',
+                text: 'Add Visits',
               ),
               Tab(
                 icon: Icon(Icons.token_sharp),
-                text: 'Use Coins',
+                text: 'Get Offers',
               ),
             ],
           ),

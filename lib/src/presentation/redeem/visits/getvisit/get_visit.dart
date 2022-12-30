@@ -1,5 +1,5 @@
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/redeem/coins/get_coin/submit_get_coin.dart';
+import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/presentation/redeem/coins/get_coin/submit_get_coin.dart';
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 

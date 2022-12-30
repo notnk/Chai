@@ -1,6 +1,6 @@
-import 'package:asd/src/data/services/auth_methods.dart';
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/home/screens/home_tab.dart';
+import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/presentation/home/screens/home_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 

@@ -1,4 +1,4 @@
-import 'package:asd/src/misc/colors.dart';
+import 'package:Chai/src/misc/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginWidget extends StatelessWidget {

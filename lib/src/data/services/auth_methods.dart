@@ -7,11 +7,6 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<void> fetchHotelNames() async {
-    final data = _firebaseFirestore.collection('hotels').get();
-    print(data);
-  }
-
   Future<void> updateRatings({
     required final String hotelName,
     required final double userRating,

@@ -1,4 +1,4 @@
-import 'package:asd/src/presentation/login/login.dart';
+import 'package:Chai/src/presentation/login/login.dart';
 import 'package:flutter/material.dart';
 import '../../../misc/colors.dart';
 import '../../../misc/global_vars.dart';

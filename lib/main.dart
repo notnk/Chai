@@ -1,4 +1,4 @@
-import 'package:asd/src/presentation/home/screens/home_tab.dart';
+import 'package:Chai/src/presentation/home/screens/new_home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:firebase_core/firebase_core.dart';
@@ -15,7 +15,7 @@ void main() async {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return const HomeTab();
+            return const NewHomePage();
           } else {
             return const IntroPage();
           }

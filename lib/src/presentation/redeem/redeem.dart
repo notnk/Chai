@@ -1,5 +1,5 @@
-import 'package:asd/src/misc/colors.dart';
-import 'package:asd/src/presentation/redeem/coins/use_coin/select_offer.dart';
+import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/presentation/redeem/coins/use_coin/select_offer.dart';
 import 'package:flutter/material.dart';
 
 import 'coins/get_coin/get_coin.dart';

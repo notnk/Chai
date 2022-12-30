@@ -63,25 +63,32 @@ class _DashboardState extends State<Dashboard> {
         ),
       ),
       appBar: AppBar(
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: const Icon(
-              Icons.qr_code_scanner_outlined,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.redAccent,
+                Colors.blue,
+                Colors.purple,
+              ],
             ),
           ),
-          const SizedBox(
-            width: 20,
+        ),
+        actions: const [
+          CircleAvatar(
+            backgroundImage: NetworkImage(""),
           ),
-          const SizedBox(
-            width: 10,
+          SizedBox(
+            width: 20,
           )
         ],
-        backgroundColor: mobileBackgroundColor,
+        title: const Text(""),
       ),
       bottomNavigationBar: CupertinoTabBar(
         onTap: navigationTapped,
-        backgroundColor: mobileBackgroundColor,
+        backgroundColor: Colors.transparent,
         items: [
           BottomNavigationBarItem(
             icon: Icon(

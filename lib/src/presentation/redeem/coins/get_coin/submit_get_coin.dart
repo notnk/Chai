@@ -1,5 +1,5 @@
-import 'package:asd/src/data/services/auth_methods.dart';
-import 'package:asd/src/presentation/redeem/succ.dart';
+import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
