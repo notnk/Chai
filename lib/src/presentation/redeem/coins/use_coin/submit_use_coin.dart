@@ -1,4 +1,4 @@
-import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/data/services/update_values.dart';
 import 'package:Chai/src/misc/colors.dart';
 import 'package:Chai/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +19,11 @@ class SubmitUseCoin extends StatefulWidget {
 class _SubmitUseCoinState extends State<SubmitUseCoin> {
   final TextEditingController _textEditingController = TextEditingController();
   checkCode() async {
-    final code = _textEditingController.text;
-    final int codeInt = int.parse(code);
-    if (codeInt > 1000) {
-      String res = await AuthMethods().checkCodeToMinusCoin(
-        offerCoin: widget.offerCoin,
-        codeGet: codeInt,
+    final code = int.parse(_textEditingController.text);
+    if (code > 1000) {
+      String res = await UpdateValues().minusValues(
+        offerPrice: widget.offerCoin,
+        enteredCode: code,
         hotelName: widget.hotelName,
       );
       if (res == 'succ') {
@@ -35,14 +34,14 @@ class _SubmitUseCoinState extends State<SubmitUseCoin> {
             ),
           );
         }
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => const AlertDialog(
+            content: Text('Process was not complete'),
+          ),
+        );
       } //checking for correct code and adding coin if correct code is entred
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => const AlertDialog(
-          content: Text('Code was Wrong!'),
-        ),
-      );
     }
   }
 
@@ -53,11 +52,6 @@ class _SubmitUseCoinState extends State<SubmitUseCoin> {
     );
     return Scaffold(
       backgroundColor: mobileBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        title: const Text("Ask the member to enter the code"),
-        elevation: 0,
-      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -77,18 +71,22 @@ class _SubmitUseCoinState extends State<SubmitUseCoin> {
             const SizedBox(
               height: 100,
             ),
-            TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
-                hintText: 'Code',
-                focusedBorder: inputBorder,
-                enabledBorder: inputBorder,
-                labelText: 'Enter code',
-                fillColor: Colors.grey,
-                filled: true,
-                border: InputBorder.none,
+            SizedBox(
+              width: 200,
+              child: TextField(
+                controller: _textEditingController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Code',
+                  focusedBorder: inputBorder,
+                  enabledBorder: inputBorder,
+                  labelText: 'Enter code',
+                  fillColor: Colors.white10,
+                  filled: true,
+                  border: InputBorder.none,
+                ),
+                keyboardType: TextInputType.number,
               ),
-              keyboardType: TextInputType.number,
             ),
             const SizedBox(
               height: 60,
@@ -96,8 +94,8 @@ class _SubmitUseCoinState extends State<SubmitUseCoin> {
             InkWell(
               onTap: () => checkCode(),
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 30,
+                width: 100,
+                height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.blue,

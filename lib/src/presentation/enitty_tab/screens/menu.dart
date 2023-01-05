@@ -18,15 +18,17 @@ class _MenuState extends State<Menu> {
         backgroundColor: mobileBackgroundColor,
         title: Text(widget.hotelName),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
-          Text("item"),
-          Text("item"),
-          Text("item"),
-          Text("item"),
-          Text("item"),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: const [
+            Text("item"),
+            Text("item"),
+            Text("item"),
+            Text("item"),
+            Text("item"),
+          ],
+        ),
       ),
     );
   }

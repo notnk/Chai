@@ -1,10 +1,12 @@
+import 'package:Chai/src/data/services/auth_methods.dart';
 import 'package:Chai/src/misc/colors.dart';
-import 'package:Chai/src/presentation/redeem/coins/get_coin/submit_get_coin.dart';
+import 'package:Chai/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class GetVisit extends StatefulWidget {
   final String hotelName;
+
   const GetVisit({Key? key, required this.hotelName}) : super(key: key);
 
   @override
@@ -13,23 +15,28 @@ class GetVisit extends StatefulWidget {
 
 class _GetVisitState extends State<GetVisit> {
   final TextEditingController _textEditingController = TextEditingController();
-  checkAmount() {
-    final amount = _textEditingController.text;
-    final int amountInt = int.parse(amount);
-    if (amountInt > 100) {
-      Navigator.of(context).pushReplacement(
-        SwipeablePageRoute(
-          builder: (context) => SubmitGetCoin(
-            amount: amountInt,
-            hotelName: widget.hotelName,
-          ),
-        ),
+  checkCode() async {
+    final code = _textEditingController.text;
+    final int codeInt = int.parse(code);
+    if (codeInt > 1000) {
+      String res = await AuthMethods().addVisits(
+        getCode: codeInt,
+        hotelName: widget.hotelName,
       );
+      if (res == 'succ') {
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            SwipeablePageRoute(
+              builder: (context) => SuccPage(hotelName: widget.hotelName),
+            ),
+          );
+        }
+      } //checking for correct code and adding coin if correct code is entred
     } else {
       showDialog(
         context: context,
         builder: (BuildContext context) => const AlertDialog(
-          content: Text('Enter money man(>100)!'),
+          content: Text('Code was Wrong!'),
         ),
       );
     }
@@ -52,7 +59,7 @@ class _GetVisitState extends State<GetVisit> {
               child: Container(),
             ),
             Text(
-              "Enter you amount below of ${widget.hotelName}",
+              "Enter you code below for hotel ${widget.hotelName}",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -61,27 +68,31 @@ class _GetVisitState extends State<GetVisit> {
             const SizedBox(
               height: 100,
             ),
-            TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
-                focusedBorder: inputBorder,
-                enabledBorder: inputBorder,
-                hintText: 'Amount',
-                labelText: 'Enter amount',
-                fillColor: Colors.grey,
-                filled: true,
-                border: InputBorder.none,
+            SizedBox(
+              width: 200,
+              child: TextField(
+                controller: _textEditingController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Code',
+                  focusedBorder: inputBorder,
+                  enabledBorder: inputBorder,
+                  labelText: 'Enter code',
+                  fillColor: Colors.white10,
+                  filled: true,
+                  border: InputBorder.none,
+                ),
+                keyboardType: TextInputType.number,
               ),
-              keyboardType: TextInputType.number,
             ),
             const SizedBox(
               height: 60,
             ),
             InkWell(
-              onTap: () => checkAmount(),
+              onTap: () => checkCode(),
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 30,
+                width: 100,
+                height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.blue,
@@ -99,11 +110,5 @@ class _GetVisitState extends State<GetVisit> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _textEditingController.dispose();
   }
 }

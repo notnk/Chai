@@ -1,28 +1,48 @@
+import 'package:Chai/src/data/services/auth_methods.dart';
 import 'package:Chai/src/misc/colors.dart';
 import 'package:Chai/src/presentation/enitty_tab/screens/menu.dart';
-import 'package:Chai/src/presentation/enitty_tab/screens/visit_tab.dart';
-import 'package:Chai/src/presentation/redeem/redeem.dart';
+import 'package:Chai/src/presentation/redeem/coins/get_coin/get_coin.dart';
+import 'package:Chai/src/presentation/redeem/coins/use_coin/select_offer.dart';
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewEntityPage extends StatefulWidget {
-  final String hotelName;
   final snap;
   final int index;
-  const NewEntityPage(
-      {super.key,
-      required this.snap,
-      required this.index,
-      required this.hotelName});
+  const NewEntityPage({
+    super.key,
+    required this.snap,
+    required this.index,
+  });
 
   @override
   State<NewEntityPage> createState() => _NewEntityPageState();
 }
 
+final data = AuthMethods().getUserDetails(hotelName: 'Ifthar');
+
 class _NewEntityPageState extends State<NewEntityPage> {
+  launchMaps() async {
+    final url = Uri.parse(widget.snap['location']);
+    if (!await launchUrl(url)) {
+      throw 'error';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Navigator.of(context).push(
+          SwipeablePageRoute(
+            builder: (context) => GetCoin(
+              hotelName: widget.snap['name'],
+            ),
+          ),
+        ),
+        label: const Icon(Icons.add),
+      ),
       backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -54,41 +74,32 @@ class _NewEntityPageState extends State<NewEntityPage> {
               const SizedBox(
                 width: 20,
               ),
-              Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.orange,
-                //   borderRadius: BorderRadius.circular(10),
-                // ),
-                child: const Icon(Icons.location_on_outlined),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.orange,
-                //   borderRadius: BorderRadius.circular(13),
-                // ),
-                child: InkWell(
-                  onTap: () => Navigator.of(context).push(
-                    SwipeablePageRoute(
-                      builder: (context) => Menu(
-                        hotelName: widget.hotelName,
-                      ),
-                    ),
-                  ),
-                  child: const Icon(Icons.menu_book_outlined),
+              InkWell(
+                onTap: () => canLaunchUrl(Uri.parse(widget.snap['location'])),
+                child: const Icon(
+                  Icons.location_on_outlined,
                 ),
               ),
               const SizedBox(
                 width: 20,
               ),
-              Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.orange,
-                //   borderRadius: BorderRadius.circular(13),
-                // ),
-                child: const Icon(Icons.contact_phone_outlined),
+              InkWell(
+                onTap: () => Navigator.of(context).push(
+                  SwipeablePageRoute(
+                    builder: (context) => Menu(
+                      hotelName: widget.snap['name'],
+                    ),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.menu_book_outlined,
+                ),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              const Icon(
+                Icons.contact_phone_outlined,
               ),
             ],
           ),
@@ -98,51 +109,49 @@ class _NewEntityPageState extends State<NewEntityPage> {
           InkWell(
             onTap: () => Navigator.of(context).push(
               SwipeablePageRoute(
-                builder: (context) => RedeemTab(
-                  hotelName: widget.hotelName,
+                builder: (context) => SelectOffer(
+                  hotelName: widget.snap['name'],
                 ),
               ),
             ),
             child: const ListTile(
-              leading: Text("Coins"),
+              leading: Text("Avail Offers"),
               trailing: Icon(Icons.currency_exchange_outlined),
             ),
           ),
           InkWell(
-            onTap: () => Navigator.of(context).push(
-              SwipeablePageRoute(
-                builder: (context) => VisitTab(
-                  hotelName: widget.hotelName,
-                ),
-              ),
-            ),
+            onTap: () => {},
             child: const ListTile(
-              leading: Text("Vists"),
-              trailing: Icon(Icons.vaping_rooms_outlined),
+              leading: Text("Total vists"),
+              trailing: Text("9"),
             ),
           ),
-          // ListTile(
-          //   leading: Text(
-          //     widget.snap['location'],
-          //   ),
-          //   trailing: const Icon(Icons.location_on_outlined),
+          InkWell(
+            onTap: () => {},
+            child: const ListTile(
+              leading: Text("Balance coins"),
+              trailing: Text("140"),
+            ),
+          ),
+          // StreamBuilder(
+          //   stream: FirebaseFirestore.instance.collection('users').snapshots(),
+          //   builder: (context,
+          //       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          //     if (!snapshot.hasData) {
+          //       return const CircularProgressIndicator();
+          //     } else {
+          //       print(snapshot.data!);
+          //       return testdata(
+          //         snap: snapshot.data!.docs,
+          //       );
+          //     }
+          //   },
           // ),
-          // InkWell(
-          //   onTap: () => Navigator.of(context).push(
-          //     SwipeablePageRoute(
-          //       builder: (context) => Menu(
-          //         hotelName: widget.hotelName,
-          //       ),
-          //     ),
-          //   ),
-          //   child: const ListTile(
-          //     leading: Text("Menu"),
-          //     trailing: Icon(Icons.menu_book_outlined),
-          //   ),
-          // ),
-          // const ListTile(
-          //   leading: Text("Contact us"),
-          //   trailing: Icon(Icons.phone_callback_outlined),
+          // FutureBuilder(
+          //   future: data,
+          //   builder: (context, snapshot) {
+          //     return Text('$data');
+          //   },
           // ),
         ],
       ),

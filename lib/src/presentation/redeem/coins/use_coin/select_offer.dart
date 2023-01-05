@@ -1,8 +1,7 @@
 import 'package:Chai/src/misc/colors.dart';
-import 'package:Chai/src/misc/global_vars.dart';
-import 'package:Chai/src/presentation/redeem/coins/use_coin/submit_use_coin.dart';
+import 'package:Chai/src/presentation/redeem/coins/use_coin/offer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class SelectOffer extends StatefulWidget {
   final String hotelName;
@@ -16,54 +15,34 @@ class _SelectOfferState extends State<SelectOffer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Offers avaliable"),
+        backgroundColor: mobileBackgroundColor,
+      ),
       backgroundColor: mobileBackgroundColor,
-      body: Column(
-        children: [
-          ListTile(
-            leading: Text(
-              "Offers for ${widget.hotelName}",
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            trailing: const Icon(Icons.currency_exchange_outlined),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  // height: MediaQuery.of(context).size.height / 2,
-                  height: 400,
-                  child: ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height / 10,
-                        child: ListTile(
-                          leading: Image.network(
-                            imagesUrl[index],
-                            width: 100,
-                            fit: BoxFit.fill,
-                          ),
-                          title: Text('offer Name $index'),
-                          trailing: IconButton(
-                            onPressed: () => Navigator.of(context).push(
-                              SwipeablePageRoute(
-                                builder: (context) => SubmitUseCoin(
-                                  hotelName: hotelsName[index],
-                                  offerCoin: index + 1,
-                                ),
-                              ),
-                            ),
-                            icon: const Icon(Icons.next_plan_outlined),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: StreamBuilder(
+        stream:
+            FirebaseFirestore.instance.collection(widget.hotelName).snapshots(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              return Offers(
+                hotelName: widget.hotelName,
+                snap: snapshot.data!.docs[index].data(),
+                index: index,
+              );
+            },
+          );
+        },
       ),
     );
   }

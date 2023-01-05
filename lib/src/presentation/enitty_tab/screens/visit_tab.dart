@@ -20,7 +20,9 @@ class _VisitTabState extends State<VisitTab> {
       child: Scaffold(
         body: TabBarView(
           children: [
-            GetVisit(hotelName: widget.hotelName),
+            GetVisit(
+              hotelName: widget.hotelName,
+            ),
             SelectVisit(hotelName: widget.hotelName),
           ],
         ),

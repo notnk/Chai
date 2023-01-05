@@ -1,6 +1,5 @@
 import 'package:Chai/src/data/services/auth_methods.dart';
 import 'package:Chai/src/misc/colors.dart';
-import 'package:Chai/src/presentation/home/screens/home_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -14,14 +13,8 @@ class IntroPage extends StatefulWidget {
 class _IntroPageState extends State<IntroPage> {
   onTapLogin() async {
     String res = await AuthMethods().signInWithGoogle();
-    if (res == 'succ') {
-      if (mounted) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const HomeTab(),
-          ),
-        );
-      }
+    if (res != 'succ') {
+      print("Error");
     }
   }
 
@@ -35,10 +28,34 @@ class _IntroPageState extends State<IntroPage> {
           globalBackgroundColor: mobileBackgroundColor,
           next: const Icon(Icons.navigate_next_outlined),
           showSkipButton: true,
+          baseBtnStyle: const ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(
+              Colors.white10,
+            ),
+          ),
           backSemantic: 'Back',
-          back: const Text('Back'),
-          skip: const Text("Skip"),
-          done: const Text("Login"),
+          dotsDecorator: const DotsDecorator(
+            color: Colors.red,
+            activeColor: Colors.amberAccent,
+          ),
+          back: const Text(
+            'Back',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          skip: const Text(
+            "Skip",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          done: const Text(
+            "Login",
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           dotsFlex: 3,
           onDone: () => onTapLogin(),
           pages: [
@@ -50,8 +67,17 @@ class _IntroPageState extends State<IntroPage> {
               ),
             ),
             PageViewModel(
-              title: 'Offers',
-              body: 'Offers',
+              title: 'Passwords',
+              // body: 'Passwords',
+              bodyWidget: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Text("Ifthar:2000"),
+                  Text("Arafa:2002"),
+                  Text("Salt:2001"),
+                  Text("TopForm:2003"),
+                ],
+              ),
               decoration: const PageDecoration(
                 bodyAlignment: Alignment.center,
               ),
@@ -61,12 +87,13 @@ class _IntroPageState extends State<IntroPage> {
                 bodyAlignment: Alignment.center,
               ),
               title: 'Login',
-              bodyWidget: Center(
-                child: TextButton(
-                  onPressed: () => onTapLogin(),
-                  child: const Text("Login"),
-                ),
-              ),
+              // bodyWidget: Center(
+              //   child: TextButton(
+              //     onPressed: () => onTapLogin(),
+              //     child: const Text("Login"),
+              //   ),
+              // ),
+              body: 'Hit Login button to Login using Google',
             ),
           ],
         ),

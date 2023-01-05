@@ -20,7 +20,6 @@ class _NewHomeItemsState extends State<NewHomeItems> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => NewEntityPage(
-          hotelName: widget.hotelName,
           snap: widget.snap,
           index: widget.index,
         ),
@@ -44,18 +43,15 @@ class _NewHomeItemsState extends State<NewHomeItems> {
               child: Image.network(
                 widget.snap['image'],
                 fit: BoxFit.cover,
-                width: 150,
+                width: 110,
               ),
             ),
-            title: Column(
-              children: [
-                Text(
-                  widget.snap['name'],
-                ),
-                Text(
-                  widget.snap['name'],
-                ),
-              ],
+            title: Text(
+              widget.snap['name'],
+            ),
+            hoverColor: Colors.red,
+            subtitle: const Text(
+              "More details will be added soon",
             ),
             trailing: Text(
               widget.snap['rating'],

@@ -1,4 +1,5 @@
 import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/misc/colors.dart';
 import 'package:Chai/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
@@ -50,7 +51,9 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
       borderSide: Divider.createBorderSide(context),
     );
     return Scaffold(
+      backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
+        backgroundColor: mobileBackgroundColor,
         title: const Text("Ask the member to enter the code"),
         elevation: 0,
       ),
@@ -73,18 +76,22 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
             const SizedBox(
               height: 100,
             ),
-            TextField(
-              controller: _textEditingController,
-              decoration: InputDecoration(
-                hintText: 'Code',
-                focusedBorder: inputBorder,
-                enabledBorder: inputBorder,
-                labelText: 'Enter code',
-                fillColor: Colors.grey,
-                filled: true,
-                border: InputBorder.none,
+            SizedBox(
+              width: 200,
+              child: TextField(
+                controller: _textEditingController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Code',
+                  focusedBorder: inputBorder,
+                  enabledBorder: inputBorder,
+                  labelText: 'Enter code',
+                  fillColor: Colors.white10,
+                  filled: true,
+                  border: InputBorder.none,
+                ),
+                keyboardType: TextInputType.number,
               ),
-              keyboardType: TextInputType.number,
             ),
             const SizedBox(
               height: 60,
@@ -92,8 +99,8 @@ class _SubmitGetCoinState extends State<SubmitGetCoin> {
             InkWell(
               onTap: () => checkCode(),
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 30,
+                width: 100,
+                height: 40,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.blue,

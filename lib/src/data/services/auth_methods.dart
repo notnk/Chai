@@ -1,11 +1,35 @@
 import 'dart:developer';
+import 'package:Chai/src/data/models/coin_get_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../models/hotel_model.dart';
+
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  Future<FBUser> getUserDetails({
+    required final String hotelName,
+  }) async {
+    User currentUser = _auth.currentUser!;
+    // print(currentUser.uid + hotelName);
+    final documentSnapshot = await _firebaseFirestore
+        .collection('users')
+        .doc(currentUser.uid + hotelName)
+        .get();
+
+    return FBUser.fromSnap(documentSnapshot);
+  }
+
+  Future<Hotel> getHotelDetails({
+    required final String hotelName,
+  }) async {
+    final documentSnapshot =
+        await _firebaseFirestore.collection('hotels').doc(hotelName).get();
+
+    return Hotel.fromSnap(documentSnapshot);
+  }
 
   Future<void> updateRatings({
     required final String hotelName,
@@ -13,15 +37,13 @@ class AuthMethods {
   }) async {
     final data =
         await _firebaseFirestore.collection('hotels').doc(hotelName).get();
-    print(data);
     final oldRating = double.parse(
       data.get('rating'),
     );
-    final int totalUser = int.parse(
+    final totalUser = double.parse(
       data.get('totalUser'),
     );
-    final int rating =
-        ((oldRating * totalUser) + userRating) ~/ (totalUser + 1);
+    final rating = ((oldRating * totalUser) + userRating) ~/ (totalUser + 1);
     try {
       await _firebaseFirestore
           .collection('users')
@@ -74,10 +96,19 @@ class AuthMethods {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+
       UserCredential userCredential =
           await _auth.signInWithCredential(credential);
       if (userCredential.user != null) {
-        if (userCredential.additionalUserInfo!.isNewUser) {}
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          _firebaseFirestore
+              .collection('UserDetails')
+              .doc(googleUser!.email)
+              .set({
+            'name': googleUser.displayName,
+            'photoUrl': googleUser.photoUrl,
+          });
+        }
       }
       return 'succ';
     } catch (e) {
@@ -100,11 +131,11 @@ class AuthMethods {
       var codeInt = int.parse(code);
       try {
         //if its not a new user
-        final dataCoin = await _firebaseFirestore
+        final data = await _firebaseFirestore
             .collection('users')
             .doc(_auth.currentUser!.uid + hotelName)
             .get();
-        int totalCoin = await dataCoin.get('coin');
+        int totalCoin = await data.get('coin');
         if (codeGet == codeInt) {
           totalCoin = (amount ~/ 10) + totalCoin;
           await _firebaseFirestore
@@ -127,11 +158,11 @@ class AuthMethods {
             'coin': 0,
           },
         );
-        final dataCoin = await _firebaseFirestore
+        final data = await _firebaseFirestore
             .collection('users')
             .doc(_auth.currentUser!.uid + hotelName)
             .get();
-        int totalCoin = await dataCoin.get('coin');
+        int totalCoin = await data.get('coin');
         if (codeGet == codeInt) {
           totalCoin = (amount ~/ 10) + totalCoin;
           await _firebaseFirestore
@@ -161,7 +192,7 @@ class AuthMethods {
       final data =
           await _firebaseFirestore.collection("hotels").doc(hotelName).get();
       final code = await data.get('code');
-      var codeInt = int.parse(code);
+      // var codeInt = int.parse(code);
       try {
         //if its not a new user
         final dataCoin = await _firebaseFirestore
@@ -169,19 +200,24 @@ class AuthMethods {
             .doc(_auth.currentUser!.uid + hotelName)
             .get();
         int totalCoin = await dataCoin.get('coin');
-        if (codeGet == codeInt) {
-          int newCoin = totalCoin - offerCoin;
-          await _firebaseFirestore
-              .collection('users')
-              .doc(_auth.currentUser!.uid + hotelName)
-              .set(
-            {
-              'coin': newCoin,
-            },
-          );
-          return 'succ';
+        if (codeGet == code) {
+          if (totalCoin - offerCoin >= 0) {
+            int newCoin = totalCoin - offerCoin;
+            await _firebaseFirestore
+                .collection('users')
+                .doc(_auth.currentUser!.uid + hotelName)
+                .set(
+              {
+                'coin': newCoin,
+              },
+            );
+            return 'succ';
+          } else {
+            return 'error';
+          }
         }
       } catch (e) {
+        log(e.toString());
         //if new user
         await _firebaseFirestore
             .collection('users')
@@ -196,8 +232,8 @@ class AuthMethods {
             .doc(_auth.currentUser!.uid + hotelName)
             .get();
         int totalCoin = await dataCoin.get('coin');
-        if (codeGet == codeInt) {
-          if (totalCoin >= offerCoin) {
+        if (codeGet == code) {
+          if (totalCoin - offerCoin >= 0) {
             await _firebaseFirestore
                 .collection('users')
                 .doc(_auth.currentUser!.uid + hotelName)
@@ -207,9 +243,72 @@ class AuthMethods {
               },
             );
             return 'succ';
+          } else {
+            return 'error';
           }
         }
       }
+    } catch (e) {
+      log('this is the error ${e.toString()}');
+    }
+    return 'error';
+  }
+
+  addVisits({
+    required final String hotelName,
+    required final int getCode,
+  }) async {
+    try {
+      final data =
+          await _firebaseFirestore.collection("hotels").doc(hotelName).get();
+      final code = await data.get('code');
+      var codeInt = int.parse(code);
+      try {
+        //if its not a new user
+        final data = await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .get();
+        int totalVisit = await data.get('visit');
+        if (getCode == codeInt) {
+          await _firebaseFirestore
+              .collection('users')
+              .doc(_auth.currentUser!.uid + hotelName)
+              .set(
+            {
+              'visit': totalVisit + 1,
+            },
+          );
+          return 'succ';
+        }
+      } catch (e) {
+        //if new user
+        await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .set(
+          {
+            'visit': 0,
+          },
+        );
+        final data = await _firebaseFirestore
+            .collection('users')
+            .doc(_auth.currentUser!.uid + hotelName)
+            .get();
+        int totalVisit = await data.get('visit');
+        if (getCode == codeInt) {
+          await _firebaseFirestore
+              .collection('users')
+              .doc(_auth.currentUser!.uid + hotelName)
+              .set(
+            {
+              'visit': totalVisit + 1,
+            },
+          );
+          return 'succ';
+        }
+      }
+      return 'succ';
     } catch (e) {
       log('this is the error ${e.toString()}');
     }

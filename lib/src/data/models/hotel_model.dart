@@ -1,28 +1,22 @@
-import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Hotel {
   final String hotelName;
-  final String location;
   final int code;
-  const Hotel(
-    this.hotelName,
-    this.location,
-    this.code,
-  );
-  Map<String, dynamic> toJson() {
-    return {
-      'hotelName': hotelName,
-      'location': location,
-      'code': code,
-    };
-  }
-
-  factory Hotel.fromMap(Map<String, dynamic> map) {
+  const Hotel({
+    required this.hotelName,
+    required this.code,
+  });
+  static Hotel fromSnap(DocumentSnapshot snap) {
+    var snapshot = snap.data() as Map<String, dynamic>;
     return Hotel(
-      map['hotelName'],
-      map['location'],
-      map['code'],
+      hotelName: snapshot['name'],
+      code: snapshot['code'],
     );
   }
-  factory Hotel.fromJson(String source) => Hotel.fromMap(json.decode(source));
+
+  Map<String, dynamic> toJson() => {
+        "name": hotelName,
+        "code": code,
+      };
 }
