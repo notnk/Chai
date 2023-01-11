@@ -1,5 +1,6 @@
-import 'package:Chai/src/data/services/update_values.dart';
+import 'package:Chai/src/data/db_calls/update_values.dart';
 import 'package:Chai/src/misc/colors.dart';
+import 'package:Chai/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';
 
 class GetCoin extends StatefulWidget {
@@ -14,9 +15,14 @@ class _GetCoinState extends State<GetCoin> {
   final TextEditingController _amountEditingController =
       TextEditingController();
   final TextEditingController _codeEditingController = TextEditingController();
-  checkAmount() async {
+  bool isLoading = false;
+  _checkAmount() async {
+    // Navigator.of(context).pop();
     final amount = int.parse(_amountEditingController.text.trim());
     final code = int.parse(_codeEditingController.text.trim());
+    setState(() {
+      isLoading = true;
+    });
     if (amount > 100 && amount < 2000) {
       String res = await UpdateValues().addValues(
           hotelName: widget.hotelName,
@@ -32,8 +38,18 @@ class _GetCoinState extends State<GetCoin> {
           ),
         );
       } else {
+        const AlertDialog(
+          content: Text('Coin and Vists have been added'),
+        );
         if (mounted) {
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => SuccPage(
+                  hotelName: widget.hotelName,
+                ),
+              ),
+              (route) => false);
         }
         showDialog(
           barrierLabel: "Success",
@@ -54,6 +70,9 @@ class _GetCoinState extends State<GetCoin> {
         ),
       );
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -116,7 +135,7 @@ class _GetCoinState extends State<GetCoin> {
               height: 60,
             ),
             InkWell(
-              onTap: () => checkAmount(),
+              onTap: () => _checkAmount(),
               child: Container(
                 width: 100,
                 height: 40,
@@ -124,8 +143,12 @@ class _GetCoinState extends State<GetCoin> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.blue,
                 ),
-                child: const Center(
-                  child: Text("Submit"),
+                child: Center(
+                  child: isLoading == false
+                      ? const Text("Submit")
+                      : const CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        ),
                 ),
               ),
             ),

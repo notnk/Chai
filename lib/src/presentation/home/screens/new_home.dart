@@ -131,177 +131,172 @@ class NewHomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          // gradient: LinearGradient(
-          //   begin: Alignment.centerLeft,
-          //   end: Alignment.centerRight,
-          //   colors: [
-          //     Colors.redAccent,
-          //     Colors.deepOrange,
-          //   ],
-          // ),
-          color: mobileBackgroundColor,
-        ),
-        child: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          children: <Widget>[
-            InkWell(
-              onTap: () => Navigator.of(context).push(
-                SwipeablePageRoute(
-                  builder: (context) => const NewResturant(
-                    hotelName: 'Restaurants',
-                  ),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      spreadRadius: 2,
-                      blurRadius: 10,
+      backgroundColor: mobileBackgroundColor,
+      body: Column(
+        children: [
+          SizedBox(
+            height: 700,
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(20),
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+              children: <Widget>[
+                InkWell(
+                  onTap: () => Navigator.of(context).push(
+                    SwipeablePageRoute(
+                      builder: (context) => const NewResturant(
+                        hotelName: 'Restaurants',
+                      ),
                     ),
-                  ],
-                  gradient: _colorGradient(),
-                ),
-                child: Container(
-                  decoration: const BoxDecoration(),
-                  child: Center(
-                    child: Text(
-                      "Restarant",
-                      style: GoogleFonts.sansita(
-                        fontSize: 35,
-                        color: Colors.black,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                      gradient: _colorGradient(),
+                    ),
+                    child: Container(
+                      decoration: const BoxDecoration(),
+                      child: Center(
+                        child: Text(
+                          "Restarant",
+                          style: GoogleFonts.sansita(
+                            fontSize: 35,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: () => Navigator.of(context).push(
-                SwipeablePageRoute(
-                  builder: (context) => const NoPage(),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      spreadRadius: 2,
-                      blurRadius: 10,
+                InkWell(
+                  onTap: () => Navigator.of(context).push(
+                    SwipeablePageRoute(
+                      builder: (context) => const NoPage(),
                     ),
-                  ],
-                  gradient: _colorGradient(),
-                ),
-                child: Center(
-                  child: Text(
-                    "Welcome",
-                    style: GoogleFonts.sansita(
-                      fontSize: 30,
-                      color: Colors.black,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                      gradient: _colorGradient(),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Welcome",
+                        style: GoogleFonts.sansita(
+                          fontSize: 30,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: () => Navigator.of(context).push(
-                SwipeablePageRoute(
-                  builder: (context) => const NoPage(),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      spreadRadius: 2,
-                      blurRadius: 10,
+                InkWell(
+                  onTap: () => Navigator.of(context).push(
+                    SwipeablePageRoute(
+                      builder: (context) => const NoPage(),
                     ),
-                  ],
-                  gradient: _colorGradient(),
-                ),
-                child: Center(
-                  child: Text(
-                    "To",
-                    style: GoogleFonts.sansita(
-                      fontSize: 30,
-                      color: Colors.black,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                      gradient: _colorGradient(),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "To",
+                        style: GoogleFonts.sansita(
+                          fontSize: 30,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: () => Navigator.of(context).push(
-                SwipeablePageRoute(
-                  builder: (context) => const NoPage(),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      spreadRadius: 2,
-                      blurRadius: 10,
+                InkWell(
+                  onTap: () => Navigator.of(context).push(
+                    SwipeablePageRoute(
+                      builder: (context) => const NoPage(),
                     ),
-                  ],
-                  gradient: _colorGradient(),
-                ),
-                child: Center(
-                  child: Text(
-                    "The",
-                    style: GoogleFonts.sansita(
-                      fontSize: 30,
-                      color: Colors.black,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                      gradient: _colorGradient(),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "The",
+                        style: GoogleFonts.sansita(
+                          fontSize: 30,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            InkWell(
-              onTap: () => Navigator.of(context).push(
-                SwipeablePageRoute(
-                  builder: (context) => const NoPage(),
-                ),
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
-                    BoxShadow(
-                      spreadRadius: 2,
-                      blurRadius: 10,
+                InkWell(
+                  onTap: () => Navigator.of(context).push(
+                    SwipeablePageRoute(
+                      builder: (context) => const NoPage(),
                     ),
-                  ],
-                  gradient: _colorGradient(),
-                ),
-                child: Center(
-                  child: Text(
-                    "Beta",
-                    style: GoogleFonts.sansita(
-                      fontSize: 30,
-                      color: Colors.black,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                        ),
+                      ],
+                      gradient: _colorGradient(),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Beta",
+                        style: GoogleFonts.sansita(
+                          fontSize: 30,
+                          color: Colors.black,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 class NewHomeItems extends StatefulWidget {
   final snap;
   final int index;
-  final String hotelName;
+
   const NewHomeItems(
       {super.key,
       required this.snap,
       required this.index,
-      required this.hotelName});
+    });
 
   @override
   State<NewHomeItems> createState() => _NewHomeItemsState();

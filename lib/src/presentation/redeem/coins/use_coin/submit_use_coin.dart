@@ -1,4 +1,4 @@
-import 'package:Chai/src/data/services/update_values.dart';
+import 'package:Chai/src/data/db_calls/update_values.dart';
 import 'package:Chai/src/misc/colors.dart';
 import 'package:Chai/src/presentation/redeem/succ.dart';
 import 'package:flutter/material.dart';

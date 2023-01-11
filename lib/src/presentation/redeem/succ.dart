@@ -1,4 +1,4 @@
-import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/data/db_calls/auth_methods.dart';
 import 'package:Chai/src/misc/colors.dart';
 import 'package:Chai/src/presentation/home/screens/new_home.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +61,11 @@ class _SuccPageState extends State<SuccPage> {
                 print(rating);
                 AuthMethods()
                     .updateRatings(hotelName: 'Ifthar', userRating: rating);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const NewHomePage(),
+                  ),
+                );
               },
             ),
           ),

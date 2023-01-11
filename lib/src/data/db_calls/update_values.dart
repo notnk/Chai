@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/data/db_calls/auth_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

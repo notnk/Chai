@@ -13,9 +13,9 @@ final List<String> entitysUrl = [
   "http://clipart-library.com/newimages/question-mark-clipart-2-4.jpg",
 ];
 final List<String> hotelsName = [
+  "Arafa",
   "Ifthar",
   "Salt",
-  "Arafa",
   "Topform",
 ];
 const List<Widget> homeScreenItems = [

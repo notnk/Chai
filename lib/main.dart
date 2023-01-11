@@ -1,7 +1,7 @@
-import 'package:Chai/src/presentation/home/screens/new_home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:firebase_core/firebase_core.dart';
+import 'src/presentation/home/screens/new_catagory.dart';
 import 'src/presentation/login/intro.dart';
 
 void main() async {
@@ -15,7 +15,7 @@ void main() async {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return const NewHomePage();
+            return const NewCataPage();
           } else {
             return const IntroPage();
           }

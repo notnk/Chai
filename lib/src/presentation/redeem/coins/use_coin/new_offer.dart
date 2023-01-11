@@ -1,5 +1,5 @@
 import 'package:Chai/src/data/models/coin_get_model.dart';
-import 'package:Chai/src/data/services/auth_methods.dart';
+import 'package:Chai/src/data/db_calls/auth_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

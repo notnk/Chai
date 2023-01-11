@@ -1,5 +1,4 @@
 import 'package:Chai/src/misc/colors.dart';
-import 'package:Chai/src/misc/global_vars.dart';
 import 'package:Chai/src/presentation/enitty_tab/widgets/home_items.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,6 @@ class _NewResturantState extends State<NewResturant> {
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               return NewHomeItems(
-                hotelName: hotelsName[index],
                 snap: snapshot.data!.docs[index].data(),
                 index: index,
               );

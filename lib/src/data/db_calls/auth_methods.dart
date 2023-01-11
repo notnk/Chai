@@ -48,7 +48,7 @@ class AuthMethods {
       await _firebaseFirestore
           .collection('users')
           .doc(_auth.currentUser!.uid + hotelName)
-          .set(
+          .update(
         {
           'rating': rating,
         },
@@ -56,7 +56,7 @@ class AuthMethods {
       await _firebaseFirestore
           .collection('users')
           .doc(_auth.currentUser!.uid + hotelName)
-          .set(
+          .update(
         {
           'totalUser': totalUser + 1,
         },

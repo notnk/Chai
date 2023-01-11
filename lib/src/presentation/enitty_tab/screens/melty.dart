@@ -5,65 +5,51 @@ import 'package:Chai/src/presentation/redeem/coins/use_coin/select_offer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class NewEntityPage extends StatefulWidget {
-  final snap;
-  final int index;
-  const NewEntityPage({
+class MeltyPage extends StatefulWidget {
+  const MeltyPage({
     super.key,
-    required this.snap,
-    required this.index,
   });
 
   @override
-  State<NewEntityPage> createState() => _NewEntityPageState();
+  State<MeltyPage> createState() => _MeltyPageState();
 }
 
-var uid = FirebaseAuth.instance.currentUser!.uid;
-var userData = {};
-getData({
-  required final String hotelName,
-}) async {
-  try {
-    var snap = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid + hotelName)
-        .get();
-    userData = snap.data()!;
-  } catch (e) {
-    userData['coin'] = 0;
-    userData['visit'] = 0;
-  }
-}
-
-class _NewEntityPageState extends State<NewEntityPage> {
-  launchMaps() async {
-    final url = Uri.parse(widget.snap['location']);
-    if (!await launchUrl(url)) {
-      throw 'error';
+class _MeltyPageState extends State<MeltyPage> {
+  var uid = FirebaseAuth.instance.currentUser!.uid;
+  var userData = {};
+  getData({
+    required final String hotelName,
+  }) async {
+    try {
+      var snap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid + hotelName)
+          .get();
+      userData = snap.data()!;
+    } catch (e) {
+      userData['coin'] = 0;
+      userData['visit'] = 0;
     }
   }
 
   @override
   void initState() {
     super.initState();
-
     // getData(hotelName: widget.snap['name']);
   }
 
   @override
   Widget build(BuildContext context) {
     setState(() {
-      getData(hotelName: widget.snap['name']);
+      getData(hotelName: 'Meltyway');
     });
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.of(context).push(
-          SwipeablePageRoute(
-            builder: (context) => GetCoin(
-              hotelName: widget.snap['name'],
+          MaterialPageRoute(
+            builder: (context) => const GetCoin(
+              hotelName: 'Meltyway',
             ),
           ),
         ),
@@ -72,14 +58,14 @@ class _NewEntityPageState extends State<NewEntityPage> {
       backgroundColor: mobileBackgroundColor,
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: Text(
-          widget.snap['name'],
+        title: const Text(
+          'Meltyway',
         ),
         actions: [
           InkWell(
             onTap: () => setState(() {
               getData(
-                hotelName: widget.snap['name'],
+                hotelName: 'Meltyway',
               );
             }),
             child: const Icon(Icons.refresh_rounded),
@@ -95,13 +81,10 @@ class _NewEntityPageState extends State<NewEntityPage> {
           SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 150,
-            child: Hero(
-              tag: 'hero${widget.index}',
-              child: Image.network(
-                widget.snap['image'],
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.fill,
-              ),
+            child: Image.network(
+              'https://images.pexels.com/photos/239975/pexels-photo-239975.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+              width: MediaQuery.of(context).size.width,
+              fit: BoxFit.fill,
             ),
           ),
           const SizedBox(
@@ -113,9 +96,8 @@ class _NewEntityPageState extends State<NewEntityPage> {
               const SizedBox(
                 width: 20,
               ),
-              InkWell(
-                onTap: () => canLaunchUrl(Uri.parse(widget.snap['location'])),
-                child: const Icon(
+              const InkWell(
+                child: Icon(
                   Icons.location_on_outlined,
                 ),
               ),
@@ -124,9 +106,9 @@ class _NewEntityPageState extends State<NewEntityPage> {
               ),
               InkWell(
                 onTap: () => Navigator.of(context).push(
-                  SwipeablePageRoute(
-                    builder: (context) => Menu(
-                      hotelName: widget.snap['name'],
+                  MaterialPageRoute(
+                    builder: (context) => const Menu(
+                      hotelName: 'Meltyway',
                     ),
                   ),
                 ),
@@ -147,9 +129,9 @@ class _NewEntityPageState extends State<NewEntityPage> {
           ),
           InkWell(
             onTap: () => Navigator.of(context).push(
-              SwipeablePageRoute(
-                builder: (context) => SelectOffer(
-                  hotelName: widget.snap['name'],
+              MaterialPageRoute(
+                builder: (context) => const SelectOffer(
+                  hotelName: 'Meltyway',
                 ),
               ),
             ),
@@ -176,40 +158,6 @@ class _NewEntityPageState extends State<NewEntityPage> {
               trailing: Text('${userData['visit']}'),
             ),
           ),
-          // SizedBox(
-          //   height: 200,
-          //   child: StreamBuilder(
-          //     stream:
-          //         FirebaseFirestore.instance.collection('users').snapshots(),
-          //     builder: (context,
-          //         AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const Center(
-          //           child: CircularProgressIndicator(
-          //             color: Colors.white,
-          //           ),
-          //         );
-          //       }
-          //       return ListView.builder(
-          //         itemCount: snapshot.data!.docs.length,
-          //         itemBuilder: (context, index) {
-          //           if (snapshot.data!.docs[index].id ==
-          //               uid + widget.snap['name']) {
-          //             return SizedBox(
-          //               height: 200,
-          //               child: NewHomeItems(
-          //                 snap: snapshot.data!.docs[index].data(),
-          //                 index: index,
-          //               ),
-          //             );
-          //           } else {
-          //             return const CircularProgressIndicator();
-          //           }
-          //         },
-          //       );
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
